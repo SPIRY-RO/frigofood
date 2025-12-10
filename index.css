@@ -11,22 +11,22 @@
     --ice-blue: #3DDCFF;
     --fresh-green: #9ADF00;
     --leaf-dark: #4A7A00;
-    
+
     /* Neutrals */
     --snow-white: #FFFFFF;
     --soft-gray: #60738C;
     --light-gray: #F0F4F8;
     --dark-bg: #050A15;
-    
+
     /* Gradients */
     --gradient-ice: linear-gradient(135deg, #3DDCFF 0%, #00AEEF 50%, #006B9F 100%);
     --gradient-frost: linear-gradient(180deg, rgba(61, 220, 255, 0.15) 0%, rgba(0, 174, 239, 0.05) 100%);
     --gradient-fresh: linear-gradient(135deg, #C9FF5A 0%, #9ADF00 50%, #4A7A00 100%);
     --gradient-dark: linear-gradient(180deg, #0B1B3B 0%, #050A15 100%);
-    
+
     /* Typography */
     --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -34,19 +34,19 @@
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
     --spacing-2xl: 5rem;
-    
+
     /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-xl: 30px;
-    
+
     /* Shadows */
     --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
     --shadow-glow: 0 0 40px rgba(0, 174, 239, 0.3);
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-base: 0.3s ease;
@@ -54,7 +54,9 @@
 }
 
 /* Reset & Base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -243,7 +245,7 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: 
+    background:
         radial-gradient(circle at 20% 80%, rgba(61, 220, 255, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(0, 174, 239, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 50% 50%, rgba(154, 223, 0, 0.05) 0%, transparent 70%);
@@ -277,12 +279,15 @@ body {
         transform: translateY(100vh) rotate(0deg);
         opacity: 0;
     }
+
     10% {
         opacity: 0.6;
     }
+
     90% {
         opacity: 0.6;
     }
+
     100% {
         transform: translateY(-100vh) rotate(360deg);
         opacity: 0;
@@ -313,8 +318,15 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 .hero-title {
@@ -438,13 +450,29 @@ body {
 }
 
 @keyframes scroll-dot {
-    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-    50% { transform: translateX(-50%) translateY(12px); opacity: 0.3; }
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(12px);
+        opacity: 0.3;
+    }
 }
 
 @keyframes pulse-scroll {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 /* ============================================
@@ -580,7 +608,7 @@ section {
    PRODUCTS SECTION
    ============================================ */
 .products {
-    background: 
+    background:
         radial-gradient(circle at 0% 100%, rgba(61, 220, 255, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 100% 0%, rgba(154, 223, 0, 0.05) 0%, transparent 50%),
         var(--dark-bg);
@@ -757,8 +785,13 @@ section {
 }
 
 @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .partner-logo {
@@ -792,10 +825,55 @@ section {
 }
 
 /* ============================================
+   DUNYA BRANDING & EXTRA STYLES
+   ============================================ */
+
+/* Dunya Logo Overlay on Product Card */
+.dunya-logo-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    /* Slight darkening for readability */
+}
+
+.dunya-text {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--snow-white);
+    letter-spacing: 5px;
+    border: 3px solid var(--snow-white);
+    padding: 10px 20px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    transition: var(--transition-base);
+}
+
+.product-card:hover .dunya-text {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--ice-blue);
+    text-shadow: 0 0 30px var(--frost-blue);
+}
+
+/* Dunya Page Filter Buttons */
+.filter-buttons .btn.active {
+    background: var(--gradient-ice);
+    border-color: transparent;
+    color: var(--snow-white);
+    box-shadow: var(--shadow-glow);
+}
+
+
+/* ============================================
    CONTACT SECTION
    ============================================ */
 .contact {
-    background: 
+    background:
         radial-gradient(circle at 30% 70%, rgba(61, 220, 255, 0.1) 0%, transparent 50%),
         var(--gradient-dark);
 }
@@ -1015,10 +1093,21 @@ section {
     transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 {
+    transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+    transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+    transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+    transition-delay: 0.4s;
+}
 
 /* ============================================
    RESPONSIVE DESIGN
@@ -1028,15 +1117,15 @@ section {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
     }
-    
+
     .contact-wrapper {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-links {
         margin-top: var(--spacing-lg);
     }
@@ -1046,7 +1135,7 @@ section {
     html {
         font-size: 15px;
     }
-    
+
     .nav-menu {
         position: fixed;
         top: 0;
@@ -1063,54 +1152,54 @@ section {
         transition: var(--transition-base);
         border-left: 1px solid rgba(61, 220, 255, 0.1);
     }
-    
+
     .nav-menu.active {
         right: 0;
     }
-    
+
     .nav-toggle {
         display: flex;
         z-index: 1001;
     }
-    
+
     .nav-toggle.active span:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
-    
+
     .nav-toggle.active span:nth-child(2) {
         opacity: 0;
     }
-    
+
     .nav-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(5px, -5px);
     }
-    
+
     .hero-title {
         font-size: clamp(2rem, 8vw, 3rem);
     }
-    
+
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .about-stats {
         grid-template-columns: 1fr;
     }
-    
+
     .products-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .features-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-links {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
     }
-    
+
     .footer-bottom {
         flex-direction: column;
         gap: var(--spacing-sm);
@@ -1122,11 +1211,11 @@ section {
     .container {
         padding: 0 var(--spacing-md);
     }
-    
+
     .hero-logo img {
         max-width: 280px;
     }
-    
+
     section {
         padding: var(--spacing-xl) 0;
     }
