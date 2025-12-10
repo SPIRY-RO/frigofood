@@ -130,7 +130,7 @@ body {
 }
 
 .nav-logo img {
-    height: 50px;
+    height: 70px;
     width: auto;
     transition: var(--transition-base);
 }
@@ -303,7 +303,7 @@ body {
 
 .hero-logo img {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     height: auto;
     filter: drop-shadow(0 10px 30px rgba(0, 174, 239, 0.3));
 }
