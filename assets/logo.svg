@@ -1,0 +1,124 @@
+<svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient corp frigider -->
+    <linearGradient id="fridgeBodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3DDCFF"/>
+      <stop offset="40%" stop-color="#00AEEF"/>
+      <stop offset="100%" stop-color="#006B9F"/>
+    </linearGradient>
+
+    <!-- Highlight lateral frigider -->
+    <linearGradient id="fridgeHighlightGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Gradient frunză -->
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C9FF5A"/>
+      <stop offset="50%" stop-color="#9ADF00"/>
+      <stop offset="100%" stop-color="#4A7A00"/>
+    </linearGradient>
+
+    <!-- Highlight frunză -->
+    <linearGradient id="leafHighlightGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Shadow soft pentru icon -->
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Fundal transparent -->
+  <rect width="520" height="200" fill="none"/>
+
+  <!-- ICON: Frigider + Frunză -->
+  <g transform="translate(40,25)" filter="url(#softShadow)">
+    <!-- Corp frigider -->
+    <rect x="0" y="0" width="90" height="120" rx="18" ry="18"
+          fill="url(#fridgeBodyGrad)"
+          stroke="#0B1B3B" stroke-width="2.6"/>
+
+    <!-- Highlight lateral -->
+    <rect x="8" y="8" width="24" height="104" rx="12" ry="12"
+          fill="url(#fridgeHighlightGrad)"/>
+
+    <!-- Linie separare uși -->
+    <line x1="0" y1="56" x2="90" y2="56"
+          stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.7"/>
+
+    <!-- Mânere sus -->
+    <rect x="12" y="16" width="6" height="18" rx="3"
+          fill="#FFFFFF" fill-opacity="0.96"/>
+    <!-- Mânere jos -->
+    <rect x="12" y="66" width="6" height="18" rx="3"
+          fill="#FFFFFF" fill-opacity="0.96"/>
+
+    <!-- Reflexie mică pe marginea dreaptă -->
+    <path d="M84 10 C86 25, 86 95, 84 110 Q88 92 88 60 Q88 28 84 10 Z"
+          fill="#FFFFFF" fill-opacity="0.18"/>
+
+    <!-- Frunză pe colț -->
+    <g transform="translate(60,-10)">
+      <!-- Siluetă frunză -->
+      <path d="M0 32
+               C 18 0, 55 2, 54 26
+               C 52 48, 32 64, 14 60
+               L 6 54 Z"
+            fill="url(#leafGrad)"/>
+
+      <!-- Highlight frunză -->
+      <path d="M6 24
+               C 18 10, 38 8, 48 20
+               C 40 18, 28 20, 16 30 Z"
+            fill="url(#leafHighlightGrad)" opacity="0.55"/>
+
+      <!-- nervură centrală -->
+      <path d="M10 26
+               C 20 30, 30 36, 38 46"
+            stroke="#2C4F00" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+      <!-- nervuri secundare -->
+      <path d="M14 30
+               C 20 30, 24 32, 28 36"
+            stroke="#2C4F00" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M18 36
+               C 24 38, 28 40, 32 44"
+            stroke="#2C4F00" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+      <!-- picătură mică (fresh vibe) -->
+      <circle cx="44" cy="18" r="4" fill="#E4F7FF"/>
+      <circle cx="44" cy="18" r="2.2" fill="#FFFFFF" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- WORDMARK + TAGLINE -->
+  <g transform="translate(160,70)">
+    <!-- "Frigo" -->
+    <text x="0" y="0"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="46" font-weight="800" letter-spacing="1"
+          fill="#0B1B3B">
+      Frigo
+    </text>
+
+    <!-- "Food" cu accent rece (mai aproape) -->
+    <text x="135" y="0"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="46" font-weight="700" letter-spacing="0.5"
+          fill="#00AEEF">
+      Food
+    </text>
+
+    <!-- Tagline -->
+    <text x="2" y="32"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="16" font-weight="500"
+          fill="#60738C">
+      Fresh • Chilled • Ready
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FrigoFood.ro - Produse congelate premium pentru România. Legume, carne, pește și fructe congelate de cea mai înaltă calitate.">
+    <meta name="keywords" content="produse congelate, legume congelate, carne congelată, pește congelat, fructe congelate, distribuție România">
+    <meta name="author" content="FrigoFood">
+    <title>FrigoFood.ro | Fresh • Chilled • Ready</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <img src="assets/logo.svg" alt="FrigoFood Logo">
+            </a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about" class="nav-link">Despre Noi</a></li>
+                <li><a href="#products" class="nav-link">Produse</a></li>
+                <li><a href="#features" class="nav-link">Avantaje</a></li>
+                <li><a href="#partners" class="nav-link">Parteneri</a></li>
+                <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background">
+            <div class="frost-overlay"></div>
+            <div class="ice-particles" id="ice-particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo animate-float">
+                <img src="assets/logo.svg" alt="FrigoFood">
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Prospețime</span>
+                <span class="title-line accent">La Cel Mai Înalt Nivel</span>
+            </h1>
+            <p class="hero-subtitle">Distribuitor premium de produse congelate pentru întreaga Românie. Calitate europeană, livrare de încredere.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">
+                    <span>Descoperă Produsele</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#contact" class="btn btn-secondary">Contactează-ne</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Despre Noi</span>
+                <h2 class="section-title">Excelență în <span class="accent">Produse Congelate</span></h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-lead">De la înființare, ne-am dedicat să aducem românilor cele mai proaspete și calitative produse congelate, respectând cele mai înalte standarde europene.</p>
+                    <p>Într-o lume în care stilul de viață sănătos devine prioritar, oferim soluții complete de alimentație: de la legume și fructe congelate proaspete, până la selecții premium de carne de curcan, rață, gâscă, vânat și pește.</p>
+                    <p>Infrastructura noastră modernă, amenajată conform normelor europene de igienă sanitar-veterinară, garantează calitatea și siguranța fiecărui produs.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">❄️</div>
+                        <div class="stat-number" data-count="500">0</div>
+                        <div class="stat-label">Produse Premium</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">🚚</div>
+                        <div class="stat-number" data-count="42">0</div>
+                        <div class="stat-label">Județe Acoperite</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">🤝</div>
+                        <div class="stat-number" data-count="200">0</div>
+                        <div class="stat-label">Clienți Mulțumiți</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-number" data-count="8">0</div>
+                        <div class="stat-label">Ani de Experiență</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Gama de Produse</span>
+                <h2 class="section-title">Descoperă <span class="accent">Produsele Noastre</span></h2>
+                <p class="section-description">O gamă variată de produse congelate premium, selecționate cu grijă pentru calitatea lor excepțională.</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" data-category="vegetables">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-green"></div>
+                        <div class="product-icon">🥬</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Legume Congelate</h3>
+                        <p>Mix-uri de legume, fasole verde, mazăre, porumb, broccoli și multe altele - toate păstrate la prospețime maximă.</p>
+                        <span class="product-tag">Popular</span>
+                    </div>
+                </div>
+                <div class="product-card" data-category="meat">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-red"></div>
+                        <div class="product-icon">🍖</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Carne Premium</h3>
+                        <p>Selecții fine de curcan, rață, gâscă și vânat. Carne de cea mai înaltă calitate pentru preparate deosebite.</p>
+                        <span class="product-tag">Premium</span>
+                    </div>
+                </div>
+                <div class="product-card" data-category="fish">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-blue"></div>
+                        <div class="product-icon">🐟</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Pește și Fructe de Mare</h3>
+                        <p>Varietăți de pește proaspăt congelat, capturat și procesat conform celor mai stricte standarde.</p>
+                        <span class="product-tag">Sănătos</span>
+                    </div>
+                </div>
+                <div class="product-card" data-category="fruits">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-purple"></div>
+                        <div class="product-icon">🍓</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Fructe Congelate</h3>
+                        <p>Fructe de pădure, căpșuni, zmeură, afine și amestecuri pentru smoothie-uri și deserturi.</p>
+                        <span class="product-tag">Fresh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">De Ce Noi</span>
+                <h2 class="section-title">Avantajele <span class="accent">FrigoFood</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">❄️</div>
+                    </div>
+                    <h3>Calitate Premium</h3>
+                    <p>Produse selecționate cu atenție, respectând cele mai înalte standarde de calitate și prospețime.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🚚</div>
+                    </div>
+                    <h3>Distribuție Națională</h3>
+                    <p>Acoperire pe întreg teritoriul României, cu logistică eficientă și livrări la timp.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">✅</div>
+                    </div>
+                    <h3>Standarde Europene</h3>
+                    <p>Facilități și procese certificate conform normelor europene de igienă sanitar-veterinară.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🤝</div>
+                    </div>
+                    <h3>Parteneriate Solide</h3>
+                    <p>Colaborări de încredere cu cei mai mari retaileri și lanțuri HoReCa din România.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🌱</div>
+                    </div>
+                    <h3>Sustenabilitate</h3>
+                    <p>Angajament pentru practici ecologice și reducerea amprentei de carbon în lanțul de aprovizionare.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">💯</div>
+                    </div>
+                    <h3>Garanția Satisfacției</h3>
+                    <p>Suport dedicat pentru clienți și garanție de calitate pentru fiecare comandă.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners" id="partners">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Colaboratori</span>
+                <h2 class="section-title">Partenerii Noștri <span class="accent">de Încredere</span></h2>
+                <p class="section-description">Colaborăm cu cei mai mari retaileri din România pentru a asigura disponibilitatea produselor noastre.</p>
+            </div>
+            <div class="partners-marquee">
+                <div class="partners-track">
+                    <div class="partner-logo">
+                        <span class="partner-name">Metro</span>
+                        <span class="partner-subtitle">Cash & Carry</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Selgros</span>
+                        <span class="partner-subtitle">Cash & Carry</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Carrefour</span>
+                        <span class="partner-subtitle">Hypermarket</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Kaufland</span>
+                        <span class="partner-subtitle">Supermarket</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Auchan</span>
+                        <span class="partner-subtitle">Hypermarket</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Lidl</span>
+                        <span class="partner-subtitle">Discount</span>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="partner-logo">
+                        <span class="partner-name">Metro</span>
+                        <span class="partner-subtitle">Cash & Carry</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Selgros</span>
+                        <span class="partner-subtitle">Cash & Carry</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Carrefour</span>
+                        <span class="partner-subtitle">Hypermarket</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Kaufland</span>
+                        <span class="partner-subtitle">Supermarket</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <span class="section-label">Contact</span>
+                        <h2 class="section-title">Hai să <span class="accent">Colaborăm</span></h2>
+                    </div>
+                    <p class="contact-description">Ești interesat de produsele noastre sau vrei să devii partener? Contactează-ne și îți vom răspunde în cel mai scurt timp.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <strong>Adresă</strong>
+                                <p>Strada Exemplu Nr. 123, București, România</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <strong>Telefon</strong>
+                                <p>+40 123 456 789</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <div>
+                                <strong>Email</strong>
+                                <p>contact@frigofood.ro</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div>
+                                <strong>Program</strong>
+                                <p>Luni - Vineri: 08:00 - 18:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                <rect x="2" y="9" width="4" height="12"/>
+                                <circle cx="4" cy="4" r="2"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper glass-card">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nume Complet</label>
+                            <input type="text" id="name" name="name" required placeholder="Ion Popescu">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="ion@exemplu.ro">
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Companie (opțional)</label>
+                            <input type="text" id="company" name="company" placeholder="Numele companiei">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesaj</label>
+                            <textarea id="message" name="message" rows="4" required placeholder="Scrie mesajul tău aici..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>Trimite Mesajul</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="FrigoFood" class="footer-logo">
+                    <p>Distribuitor premium de produse congelate pentru întreaga Românie.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigare</h4>
+                        <ul>
+                            <li><a href="#about">Despre Noi</a></li>
+                            <li><a href="#products">Produse</a></li>
+                            <li><a href="#features">Avantaje</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Produse</h4>
+                        <ul>
+                            <li><a href="#products">Legume Congelate</a></li>
+                            <li><a href="#products">Carne Premium</a></li>
+                            <li><a href="#products">Pește</a></li>
+                            <li><a href="#products">Fructe Congelate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Termeni și Condiții</a></li>
+                            <li><a href="#">Politica de Confidențialitate</a></li>
+                            <li><a href="#">GDPR</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FrigoFood.ro - Toate drepturile rezervate.</p>
+                <p class="footer-tagline">Fresh • Chilled • Ready</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="index.js"></script>
+</body>
+</html>
