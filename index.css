@@ -869,12 +869,12 @@ section {
 }
 
 
+
 /* ============================================
    CONTACT SECTION
    ============================================ */
 .contact {
-    background:
-        radial-gradient(circle at 30% 70%, rgba(61, 220, 255, 0.1) 0%, transparent 50%),
+    background: radial-gradient(circle at 30% 70%, rgba(61, 220, 255, 0.1) 0%, transparent 50%),
         var(--gradient-dark);
 }
 
