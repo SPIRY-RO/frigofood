@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="FrigoFood.ro - Produse congelate premium pentru România. Legume, carne, pește și fructe congelate de cea mai înaltă calitate.">
+    <meta name="keywords"
+        content="produse congelate, legume congelate, carne congelată, pește congelat, fructe congelate, distribuție România">
+    <meta name="author" content="FrigoFood">
+    <title>FrigoFood.ro | Fresh • Chilled • Ready</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <img src="assets/logo.svg" alt="FrigoFood Logo">
+            </a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about" class="nav-link">Despre Noi</a></li>
+                <li><a href="#products" class="nav-link">Produse</a></li>
+                <li><a href="#features" class="nav-link">Avantaje</a></li>
+                <li><a href="#partners" class="nav-link">Parteneri</a></li>
+                <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background">
+            <div class="frost-overlay"></div>
+            <div class="ice-particles" id="ice-particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo animate-float">
+                <img src="assets/logo.svg" alt="FrigoFood">
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">PROSPEȚIME</span>
+                <span class="title-line accent">LA CEL MAI ÎNALT NIVEL</span>
+            </h1>
+            <p class="hero-subtitle">Distribuitor premium de produse congelate pentru întreaga Românie. Calitate
+                europeană, livrare de încredere.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">
+                    <span>Descoperă Produsele</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#contact" class="btn btn-secondary">Contactează-ne</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Despre Noi</span>
+                <h2 class="section-title">Excelență în <span class="accent">Transport și Distribuție Frigorifică</span>
+                </h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-lead">FrigoFood, fondată în anul 2019, este o firmă românească specializată în
+                        transportul intern și internațional de mărfuri cu temperatură controlată.</p>
+                    <p>Dispunem de o flotă frigorifică diversificată, cu vehicule de la 3,5 tone până la 20 tone,
+                        oferind flexibilitate completă pentru distribuție locală, regională și transport internațional
+                        de mare capacitate.</p>
+                    <p>Prin investiții constante în tehnologie și logistică, am evoluat într-un operator logistic
+                        complet, capabil să gestioneze întregul lanț frigorific: import, depozitare, manipulare,
+                        distribuție și transport.</p>
+                    <p>Începând cu 2024/2025, compania și-a extins activitatea prin dezvoltarea diviziei de import și
+                        distribuție de legume congelate și produse semipreparate congelate, bazată pe parteneriate
+                        internaționale solide și pe experiența acumulată în domeniul transportului frigorific.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">❄️</div>
+                        <div class="stat-number" data-count="500">0</div>
+                        <div class="stat-label">Produse Premium</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">🚚</div>
+                        <div class="stat-number" data-count="42">0</div>
+                        <div class="stat-label">Județe Acoperite</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">🤝</div>
+                        <div class="stat-number" data-count="200">0</div>
+                        <div class="stat-label">Clienți Mulțumiți</div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-number" data-count="6">0</div>
+                        <div class="stat-label">Ani de Experiență</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Ce Oferim</span>
+                <h2 class="section-title">Descoperă <span class="accent">Serviciile și Produsele Noastre</span></h2>
+                <p class="section-description">Import direct din Belgia și Polonia, depozitare și distribuție în lanț
+                    frigorific complet, transport monitorizat 24/7.</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" data-category="dunya" onclick="window.location.href='dunya.html'">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-red"></div>
+                        <!-- Placeholder for Dunya Logo if available, otherwise stylish text/icon -->
+                        <div class="dunya-logo-overlay">
+                            <span class="dunya-text">DUNYA</span>
+                        </div>
+                        <div class="product-icon">🍲</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Partener Dunya Holding</h3>
+                        <p>Legume și semipreparate congelate de calitate superioară. Reprezentant EXCLUSIV în România.
+                        </p>
+                        <span class="product-tag">Vezi Catalog -></span>
+                    </div>
+                </div>
+                <div class="product-card" data-category="transport">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-blue"></div>
+                        <div class="product-icon">🚚</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Transport Frigorific</h3>
+                        <p>Flotă diversificată 3,5t - 20t, transport intern și internațional, vehicule Euro 6
+                            monitorizate GPS 24/7.</p>
+                        <span class="product-tag">Monitorizat 24/7</span>
+                    </div>
+                </div>
+                <div class="product-card" data-category="readytocook">
+                    <div class="product-image">
+                        <div class="product-gradient gradient-purple"></div>
+                        <div class="product-icon">👨‍🍳</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Ready-to-Cook</h3>
+                        <p>Gamă completă de produse gata de preparare pentru HoReCa, retail și distribuitori alimentari.
+                        </p>
+                        <span class="product-tag">HoReCa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">De Ce Noi</span>
+                <h2 class="section-title">Avantajele <span class="accent">FrigoFood</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🚚</div>
+                    </div>
+                    <h3>Flotă Frigorifică Diversificată</h3>
+                    <p>Vehicule de la 3,5t până la 20t, ideale pentru distribuție locală, regională și transport
+                        internațional.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🏭</div>
+                    </div>
+                    <h3>Operator Logistic Complet</h3>
+                    <p>Import, depozitare, manipulare, distribuție și transport - gestionăm întregul lanț frigorific.
+                    </p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🏆</div>
+                    </div>
+                    <h3>Reprezentant Exclusiv</h3>
+                    <p>Suntem unicul reprezentant Dunya Holding în România, oferind produse unice și competitive.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">✅</div>
+                    </div>
+                    <h3>Certificări Internaționale</h3>
+                    <p>Produse conforme IFS, BRC, HACCP, ISO 22000 - cele mai stricte standarde de siguranță alimentară.
+                    </p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🌱</div>
+                    </div>
+                    <h3>Sustenabilitate</h3>
+                    <p>Flotă Euro 6, optimizarea rutelor, eficiență energetică în depozite și practici ecologice.</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">📍</div>
+                    </div>
+                    <h3>Trasabilitate Completă</h3>
+                    <p>Calitate garantată și monitorizare GPS 24/7 pentru siguranța fiecărui transport.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners" id="partners">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Parteneri Internaționali</span>
+                <h2 class="section-title">Parteneriatele Noastre <span class="accent">de Încredere</span></h2>
+                <p class="section-description">Colaborăm cu producători europeni de top și deservim distribuitori,
+                    HoReCa și retail în toată România.</p>
+            </div>
+            <div class="partners-marquee">
+                <div class="partners-track">
+                    <div class="partner-logo">
+                        <span class="partner-name">Furnizor Belgian</span>
+                        <span class="partner-subtitle">40+ ani experiență</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Dunya Holding</span>
+                        <span class="partner-subtitle">Polonia - Exclusiv RO</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Distribuitori</span>
+                        <span class="partner-subtitle">Produse Alimentare</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">HoReCa</span>
+                        <span class="partner-subtitle">Restaurante & Hoteluri</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Retail</span>
+                        <span class="partner-subtitle">Magazine & Supermarketuri</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Catering</span>
+                        <span class="partner-subtitle">Servicii Premium</span>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="partner-logo">
+                        <span class="partner-name">Furnizor Belgian</span>
+                        <span class="partner-subtitle">40+ ani experiență</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Dunya Holding</span>
+                        <span class="partner-subtitle">Polonia - Exclusiv RO</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">Distribuitori</span>
+                        <span class="partner-subtitle">Produse Alimentare</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span class="partner-name">HoReCa</span>
+                        <span class="partner-subtitle">Restaurante & Hoteluri</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <span class="section-label">Contact</span>
+                        <h2 class="section-title">Hai să <span class="accent">Colaborăm</span></h2>
+                    </div>
+                    <p class="contact-description">Ești interesat de produsele noastre sau vrei să devii partener?
+                        Contactează-ne și îți vom răspunde în cel mai scurt timp.</p>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <strong>Adresă</strong>
+                                <p>Strada Exemplu Nr. 123, București, România</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div>
+                                <strong>Telefon</strong>
+                                <p>+40 123 456 789</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <div>
+                                <strong>Email</strong>
+                                <p>contact@frigofood.ro</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div>
+                                <strong>Program</strong>
+                                <p>Luni - Vineri: 08:00 - 18:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                <rect x="2" y="9" width="4" height="12" />
+                                <circle cx="4" cy="4" r="2" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper glass-card">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nume Complet</label>
+                            <input type="text" id="name" name="name" required placeholder="Ion Popescu">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="ion@exemplu.ro">
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Companie (opțional)</label>
+                            <input type="text" id="company" name="company" placeholder="Numele companiei">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mesaj</label>
+                            <textarea id="message" name="message" rows="4" required
+                                placeholder="Scrie mesajul tău aici..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>Trimite Mesajul</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13" />
+                                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="FrigoFood" class="footer-logo">
+                    <p>Oferim produse congelate de cea mai înaltă calitate și un lanț logistic complet, eficient și
+                        sigur. Din 2019.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigare</h4>
+                        <ul>
+                            <li><a href="#about">Despre Noi</a></li>
+                            <li><a href="#products">Produse</a></li>
+                            <li><a href="#features">Avantaje</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Servicii</h4>
+                        <ul>
+                            <li><a href="#products">Legume Congelate</a></li>
+                            <li><a href="#products">Semipreparate</a></li>
+                            <li><a href="#products">Transport Frigorific</a></li>
+                            <li><a href="#products">Ready-to-Cook</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Termeni și Condiții</a></li>
+                            <li><a href="#">Politica de Confidențialitate</a></li>
+                            <li><a href="#">GDPR</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2019-2025 FrigoFood.ro - Toate drepturile rezervate.</p>
+                <p class="footer-tagline">Fresh • Chilled • Ready</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+/* Frigo Food Distribution — brand tokens
+   Load the font once per page:
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+*/
+:root {
+  /* Core palette (sampled from the original signature) */
+  --ff-navy: #061E3C;        /* primary: wordmark, headings, dark surfaces */
+  --ff-navy-900: #03122A;    /* deepest surface, footers, pressed states */
+  --ff-blue: #0066CC;        /* accent: links, buttons, rules, the second F */
+  --ff-blue-600: #0052A3;    /* blue hover / pressed on light */
+  --ff-blue-400: #3D8EF0;    /* blue on navy backgrounds (contrast-safe) */
+  --ff-silver: #B4B4B4;      /* the D, decorative only — never body text */
+  --ff-silver-300: #C5CCD6;  /* silver on navy backgrounds */
+  --ff-ink: #0B1424;         /* body text */
+  --ff-muted: #5A6678;       /* secondary text (AA on white and tint) */
+  --ff-line: #DCE3EC;        /* hairlines, borders, dividers */
+  --ff-tint: #EEF4FB;        /* cool section background */
+  --ff-white: #FFFFFF;
+
+  /* Type: one family, two widths */
+  --ff-font-sans: "Archivo", system-ui, sans-serif;
+  --ff-font-display: "Archivo", system-ui, sans-serif;
+  --ff-display-stretch: 118%;   /* use with font-stretch on display text */
+  --ff-display-weight: 750;
+
+  /* Type scale (1.25, 16px base) */
+  --ff-text-xs: 0.8rem;
+  --ff-text-sm: 0.875rem;
+  --ff-text-base: 1rem;
+  --ff-text-lg: 1.25rem;
+  --ff-text-xl: 1.563rem;
+  --ff-text-2xl: 1.953rem;
+  --ff-text-3xl: 2.441rem;
+  --ff-text-4xl: clamp(2.4rem, 4.5vw + 1rem, 3.815rem);
+
+  /* Shape */
+  --ff-radius-sm: 6px;
+  --ff-radius: 10px;
+  --ff-radius-lg: 16px;
+  --ff-radius-pill: 999px;
+
+  /* Elevation: cool, low, navy-tinted */
+  --ff-shadow-sm: 0 1px 2px rgba(6, 30, 60, 0.06), 0 1px 1px rgba(6, 30, 60, 0.04);
+  --ff-shadow: 0 4px 14px rgba(6, 30, 60, 0.08), 0 1px 3px rgba(6, 30, 60, 0.06);
+  --ff-shadow-lg: 0 18px 44px rgba(6, 30, 60, 0.12), 0 4px 10px rgba(6, 30, 60, 0.06);
+
+  /* Spacing (4px grid) */
+  --ff-space-1: 4px;
+  --ff-space-2: 8px;
+  --ff-space-3: 12px;
+  --ff-space-4: 16px;
+  --ff-space-6: 24px;
+  --ff-space-8: 32px;
+  --ff-space-12: 48px;
+  --ff-space-16: 64px;
+  --ff-space-24: 96px;
+}

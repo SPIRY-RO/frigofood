@@ -1,0 +1,5 @@
+legacy/
+.venv/
+brand/source/
+*.py
+.claude/

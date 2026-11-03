@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand guidelines · Frigo Food Distribution</title>
+<meta name="description" content="Logo, colour, typography, voice and applications for Frigo Food Distribution SRL.">
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="logo/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { margin: 0; background: var(--ff-white); color: var(--ff-ink); font: 400 16px/1.6 var(--ff-font-sans); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--ff-blue); text-decoration: none; }
+  a:hover { color: var(--ff-blue-600); text-decoration: underline; text-underline-offset: 3px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .display { font-family: var(--ff-font-display); font-stretch: var(--ff-display-stretch); font-weight: var(--ff-display-weight); letter-spacing: -0.015em; color: var(--ff-navy); }
+
+  /* top bar */
+  .top { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--ff-line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+  .top img { height: 30px; width: auto; }
+  .top nav { display: flex; gap: 22px; font-size: 14px; font-weight: 500; overflow-x: auto; scrollbar-width: none; }
+  .top nav a { color: var(--ff-muted); white-space: nowrap; }
+  .top nav a:hover { color: var(--ff-navy); text-decoration: none; }
+
+  /* hero */
+  .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--ff-line); }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .hero h1 { font-size: var(--ff-text-4xl); line-height: 1.04; margin: 0 0 20px; }
+  .hero p { font-size: var(--ff-text-lg); color: var(--ff-muted); max-width: 34ch; margin: 0 0 28px; }
+  .hero .meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--ff-muted); }
+  .chip { border: 1px solid var(--ff-line); border-radius: var(--ff-radius-pill); padding: 4px 12px; background: #fff; }
+  .hero-art { background: var(--ff-tint); border-radius: var(--ff-radius-lg); aspect-ratio: 5 / 4; display: grid; place-items: center; padding: 14%; }
+
+  /* sections */
+  section { padding: 88px 0; border-bottom: 1px solid var(--ff-line); }
+  .sec-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; margin-bottom: 44px; }
+  .sec-head .num { font-size: 14px; font-weight: 600; color: var(--ff-blue); padding-top: 10px; }
+  .sec-head h2 { font-size: var(--ff-text-3xl); line-height: 1.1; margin: 0 0 12px; }
+  .sec-head p { margin: 0; color: var(--ff-muted); max-width: 62ch; }
+  h3 { font: 700 var(--ff-text-lg)/1.3 var(--ff-font-display); font-stretch: var(--ff-display-stretch); color: var(--ff-navy); margin: 56px 0 8px; }
+  h3 + p { margin-top: 0; color: var(--ff-muted); max-width: 64ch; }
+
+  .grid { display: grid; gap: 20px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .tile { border: 1px solid var(--ff-line); border-radius: var(--ff-radius-lg); overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .tile .stage { display: grid; place-items: center; padding: 48px 40px; min-height: 240px; flex: 1; }
+  .tile .stage img { max-height: 92px; width: auto; }
+  .tile .stage.tall img { max-height: 170px; }
+  .tile .cap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--ff-line); font-size: 14px; }
+  .tile .cap span { color: var(--ff-muted); }
+  .on-navy { background: var(--ff-navy); }
+  .on-tint { background: var(--ff-tint); }
+  .on-white { background: #fff; }
+
+  /* clear space */
+  .space { background: var(--ff-tint); border-radius: var(--ff-radius-lg); padding: 56px 24px; display: grid; place-items: center; }
+  .space .box { position: relative; padding: 32px; outline: 1.5px dashed rgba(0,102,204,.55); background: #fff; }
+  .space .box img { height: 120px; width: auto; outline: 1px solid rgba(6,30,60,.15); }
+  .space .x { position: absolute; font-size: 12px; font-weight: 600; color: var(--ff-blue); }
+  .space .x.t { top: 8px; left: 50%; transform: translateX(-50%); }
+  .space .x.l { left: 11px; top: 50%; transform: translateY(-50%); }
+  .space .x.r { right: 11px; top: 50%; transform: translateY(-50%); }
+  .space .x.b { bottom: 8px; left: 50%; transform: translateX(-50%); }
+  .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+  .rule-card { border: 1px solid var(--ff-line); border-radius: var(--ff-radius); padding: 22px; }
+  .rule-card .demo { height: 64px; display: flex; align-items: center; margin-bottom: 14px; }
+  .rule-card b { display: block; color: var(--ff-navy); font-weight: 600; }
+  .rule-card span { color: var(--ff-muted); font-size: 14px; }
+
+  /* colour */
+  .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .sw { border-radius: var(--ff-radius-lg); overflow: hidden; border: 1px solid var(--ff-line); }
+  .sw .chipc { height: 150px; padding: 18px; display: flex; align-items: flex-end; font-weight: 600; font-size: 15px; }
+  .sw .info { padding: 16px 18px; font-size: 14px; display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; }
+  .sw .info dt { color: var(--ff-muted); }
+  .sw .info dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .sw .use { grid-column: 1 / -1; color: var(--ff-muted); margin-top: 8px; font-size: 13px; }
+  .support { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 20px; }
+  .support div { border: 1px solid var(--ff-line); border-radius: var(--ff-radius); overflow: hidden; font-size: 12px; }
+  .support i { display: block; height: 56px; }
+  .support p { margin: 0; padding: 8px 10px; line-height: 1.4; }
+  .support p b { display: block; font-weight: 600; color: var(--ff-navy); }
+  .ratio { display: flex; height: 64px; border-radius: var(--ff-radius); overflow: hidden; border: 1px solid var(--ff-line); margin-top: 12px; }
+  .ratio div { display: flex; align-items: flex-end; padding: 8px 10px; font-size: 12px; font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 13px; color: var(--ff-muted); }
+  table.contrast { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 12px; }
+  table.contrast th, table.contrast td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--ff-line); }
+  table.contrast th { color: var(--ff-muted); font-weight: 500; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: var(--ff-radius-pill); font-weight: 600; font-size: 13px; }
+
+  /* type */
+  .specimen { border: 1px solid var(--ff-line); border-radius: var(--ff-radius-lg); padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+  .specimen .big { font-family: var(--ff-font-display); font-stretch: var(--ff-display-stretch); font-weight: 750; font-size: clamp(64px, 11vw, 148px); line-height: 1; padding-bottom: .12em; color: var(--ff-navy); letter-spacing: -.03em; }
+  .specimen .chars { font-size: 18px; color: var(--ff-muted); line-height: 1.7; word-break: break-word; }
+  .scale { margin-top: 20px; border-top: 1px solid var(--ff-line); }
+  .scale .row { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--ff-line); }
+  .scale .row small { color: var(--ff-muted); font-size: 13px; line-height: 1.5; }
+  .scale .row > div { overflow-wrap: anywhere; }
+
+  /* voice */
+  .voice { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .voice .v { background: var(--ff-tint); border-radius: var(--ff-radius-lg); padding: 26px; }
+  .voice .v b { display: block; font: 700 var(--ff-text-lg)/1.3 var(--ff-font-display); font-stretch: var(--ff-display-stretch); color: var(--ff-navy); margin-bottom: 6px; }
+  .voice .v p { margin: 0; color: var(--ff-muted); font-size: 15px; }
+  .say { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .say > div { border: 1px solid var(--ff-line); border-radius: var(--ff-radius-lg); padding: 26px; }
+  .say h4 { margin: 0 0 12px; font-size: 14px; font-weight: 600; color: var(--ff-blue); }
+  .say .no h4 { color: #B4321F; }
+  .say p { margin: 0 0 12px; }
+  .say p:last-child { margin-bottom: 0; }
+  .say p span { display: block; color: var(--ff-muted); font-size: 14px; }
+
+  /* do / don't */
+  .dd { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .dd figure { margin: 0; border: 1px solid var(--ff-line); border-radius: var(--ff-radius-lg); overflow: hidden; }
+  .dd .st { height: 170px; display: grid; place-items: center; padding: 24px; position: relative; overflow: hidden; }
+  .dd .st img { max-height: 64px; width: auto; }
+  .dd figcaption { padding: 12px 16px; font-size: 14px; border-top: 1px solid var(--ff-line); }
+  .dd figcaption b { font-weight: 600; margin-right: 6px; }
+  .dd .ok b { color: var(--ff-blue); }
+  .dd .bad b { color: #B4321F; }
+  .dd .bad .st::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1px), rgba(180,50,31,.55) 50%, transparent calc(50% + 1px)); }
+  .fake { display: flex; align-items: center; gap: 12px; }
+  .fake img { max-height: 48px !important; }
+  .fake span { font: italic 600 20px/1.1 Georgia, serif; color: var(--ff-navy); }
+
+  /* applications */
+  .app { border: 1px solid var(--ff-line); border-radius: var(--ff-radius-lg); overflow: hidden; background: #fff; }
+  .app .frame { position: relative; overflow: hidden; background: var(--ff-tint); }
+  .app iframe { border: 0; transform-origin: 0 0; position: absolute; top: 0; left: 0; pointer-events: none; }
+  .app .cap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--ff-line); font-size: 14px; flex-wrap: wrap; }
+  .app .cap b { font-weight: 600; color: var(--ff-navy); }
+  .app .cap span { color: var(--ff-muted); }
+  .livery { background: var(--ff-tint); padding: 32px 24px 16px; }
+
+  /* downloads */
+  .files { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .files th, .files td { text-align: left; padding: 12px; border-bottom: 1px solid var(--ff-line); vertical-align: top; }
+  .files th { color: var(--ff-muted); font-weight: 500; }
+  .files td:first-child { white-space: nowrap; font-weight: 500; }
+  .files code { font-size: 13px; color: var(--ff-ink); }
+  code { overflow-wrap: anywhere; }
+  .table-scroll { overflow-x: auto; }
+
+  footer.site { background: var(--ff-navy); color: var(--ff-silver-300); padding: 56px 0; font-size: 14px; }
+  footer.site .wrap { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; align-items: flex-end; }
+  footer.site img { height: 36px; width: auto; margin-bottom: 18px; }
+  footer.site a { color: #fff; }
+
+  @media (max-width: 960px) {
+    .hero .wrap, .sec-head, .specimen { grid-template-columns: 1fr; }
+    .sec-head { gap: 8px; }
+    .g3, .swatches, .voice, .rules { grid-template-columns: repeat(2, 1fr); }
+    .dd { grid-template-columns: repeat(2, 1fr); }
+    .support { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .top nav { display: none; }
+    .hero { padding: 48px 0; }
+    section { padding: 64px 0; }
+    .g2, .g3, .swatches, .voice, .rules, .say, .dd { grid-template-columns: 1fr; }
+    .support { grid-template-columns: repeat(2, 1fr); }
+    .scale .row { grid-template-columns: 1fr; gap: 4px; }
+    .specimen { padding: 24px; }
+    .space .box { padding: 22px; }
+    .space .box img { height: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#top" aria-label="Frigo Food Distribution brand guidelines"><img src="logo/ffd-logo-horizontal.svg" alt="Frigo Food Distribution"></a>
+    <nav aria-label="Sections">
+      <a href="#logo">Logo</a><a href="#colour">Colour</a><a href="#type">Typography</a><a href="#voice">Voice</a><a href="#usage">Logo use</a><a href="#applications">Applications</a><a href="#downloads">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1 class="display">Brand guidelines</h1>
+      <p>How Frigo Food Distribution looks and sounds: clean, cold, precise. One mark, three colours, one typeface.</p>
+      <div class="meta"><span class="chip">Version 1.0</span><span class="chip">November 2026</span><span class="chip">Frigo Food Distribution SRL</span></div>
+    </div>
+    <div class="hero-art"><img src="logo/ffd-mark.svg" alt="FFD monogram"></div>
+  </div>
+</div>
+
+<main>
+<!-- 01 LOGO -->
+<section id="logo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">01 · Logo</div>
+      <div>
+        <h2 class="display">The FFD mark</h2>
+        <p>Two forward-leaning Fs and an open D, cut at one shared 18.4° slant: motion, lanes, a cold chain that keeps moving. Navy carries the name, blue carries the energy, silver closes the shape like a reefer door. The wordmark is drawn, not typed, so it renders the same everywhere. Always use the supplied files.</p>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="tile"><div class="stage on-white"><img src="logo/ffd-logo-horizontal.svg" alt="Horizontal logo, full colour"></div><div class="cap"><span>Horizontal · primary, light backgrounds</span><a href="logo/ffd-logo-horizontal.svg" download>SVG</a></div></div>
+      <div class="tile"><div class="stage on-navy"><img src="logo/ffd-logo-horizontal-white.svg" alt="Horizontal logo for dark backgrounds"></div><div class="cap"><span>Horizontal · navy and dark photos</span><a href="logo/ffd-logo-horizontal-white.svg" download>SVG</a></div></div>
+    </div>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="tile"><div class="stage tall on-tint"><img src="logo/ffd-logo-stacked.svg" alt="Stacked logo with tagline"></div><div class="cap"><span>Stacked · signage, documents</span><a href="logo/ffd-logo-stacked.svg" download>SVG</a></div></div>
+      <div class="tile"><div class="stage tall on-white"><img src="logo/ffd-mark.svg" alt="Monogram, full colour" style="max-height:120px"></div><div class="cap"><span>Mark · avatars, vehicles</span><a href="logo/ffd-mark.svg" download>SVG</a></div></div>
+      <div class="tile"><div class="stage tall on-navy"><img src="logo/ffd-mark-white.svg" alt="Monogram for dark backgrounds" style="max-height:120px"></div><div class="cap"><span>Mark · dark backgrounds</span><a href="logo/ffd-mark-white.svg" download>SVG</a></div></div>
+    </div>
+
+    <h3>Clear space</h3>
+    <p>Keep a free zone of <b>x</b> on every side, where x is the cap height of “FRIGO FOOD” (about a quarter of the mark’s height). No text, edges or other logos inside it.</p>
+    <div class="space">
+      <div class="box">
+        <span class="x t">x</span><span class="x l">x</span><span class="x r">x</span><span class="x b">x</span>
+        <img src="logo/ffd-logo-horizontal.svg" alt="Horizontal logo with clear space">
+      </div>
+    </div>
+
+    <h3>Minimum size</h3>
+    <p>Below these sizes the wordmark stops being legible. Use the mark alone, then the favicon.</p>
+    <div class="rules">
+      <div class="rule-card"><div class="demo"><img src="logo/ffd-logo-horizontal.svg" alt="" style="width:120px"></div><b>Horizontal logo</b><span>120 px wide on screen · 32 mm in print</span></div>
+      <div class="rule-card"><div class="demo"><img src="logo/ffd-mark.svg" alt="" style="height:24px"></div><b>Mark</b><span>24 px high on screen · 8 mm in print</span></div>
+      <div class="rule-card"><div class="demo" style="gap:14px"><img src="logo/favicon.svg" alt="" style="height:32px"><img src="logo/favicon.svg" alt="" style="height:16px"></div><b>Favicon</b><span>16 to 32 px · thicker strokes, navy tile</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 COLOUR -->
+<section id="colour">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">02 · Colour</div>
+      <div>
+        <h2 class="display">Cold, clear, mostly white</h2>
+        <p>White and air do most of the work. Navy anchors, blue points the way, silver appears only inside the mark. The core values are sampled from the original logo and must not drift.</p>
+      </div>
+    </div>
+
+    <div class="swatches">
+      <div class="sw"><div class="chipc" style="background:#061E3C;color:#fff">Navy</div><dl class="info"><dt>HEX</dt><dd>#061E3C</dd><dt>RGB</dt><dd>6 30 60</dd><dt>Token</dt><dd>--ff-navy</dd><dd class="use">Wordmark, headings, dark surfaces, footers.</dd></dl></div>
+      <div class="sw"><div class="chipc" style="background:#0066CC;color:#fff">Blue</div><dl class="info"><dt>HEX</dt><dd>#0066CC</dd><dt>RGB</dt><dd>0 102 204</dd><dt>Token</dt><dd>--ff-blue</dd><dd class="use">Links, buttons, rules, one accent per view.</dd></dl></div>
+      <div class="sw"><div class="chipc" style="background:#B4B4B4;color:#061E3C">Silver</div><dl class="info"><dt>HEX</dt><dd>#B4B4B4</dd><dt>RGB</dt><dd>180 180 180</dd><dt>Token</dt><dd>--ff-silver</dd><dd class="use">The D of the mark. Decorative only, never text.</dd></dl></div>
+      <div class="sw"><div class="chipc" style="background:#0B1424;color:#fff">Ink</div><dl class="info"><dt>HEX</dt><dd>#0B1424</dd><dt>RGB</dt><dd>11 20 36</dd><dt>Token</dt><dd>--ff-ink</dd><dd class="use">Body text.</dd></dl></div>
+      <div class="sw"><div class="chipc" style="background:#EEF4FB;color:#061E3C">Ice tint</div><dl class="info"><dt>HEX</dt><dd>#EEF4FB</dd><dt>RGB</dt><dd>238 244 251</dd><dt>Token</dt><dd>--ff-tint</dd><dd class="use">Section backgrounds, cards, the livery stage.</dd></dl></div>
+      <div class="sw"><div class="chipc" style="background:#FFFFFF;color:#061E3C;border-bottom:1px solid var(--ff-line)">White</div><dl class="info"><dt>HEX</dt><dd>#FFFFFF</dd><dt>RGB</dt><dd>255 255 255</dd><dt>Token</dt><dd>--ff-white</dd><dd class="use">The default canvas.</dd></dl></div>
+    </div>
+
+    <div class="support">
+      <div><i style="background:#03122A"></i><p><b>Navy 900</b>#03122A</p></div>
+      <div><i style="background:#0052A3"></i><p><b>Blue 600</b>#0052A3 · hover</p></div>
+      <div><i style="background:#3D8EF0"></i><p><b>Blue 400</b>#3D8EF0 · on navy</p></div>
+      <div><i style="background:#C5CCD6"></i><p><b>Silver 300</b>#C5CCD6 · on navy</p></div>
+      <div><i style="background:#5A6678"></i><p><b>Muted</b>#5A6678 · secondary text</p></div>
+      <div><i style="background:#DCE3EC"></i><p><b>Line</b>#DCE3EC · borders</p></div>
+    </div>
+
+    <h3>Usage ratio</h3>
+    <p>A typical page, brochure or vehicle should land close to this balance.</p>
+    <div class="ratio" role="img" aria-label="White 50 percent, navy 25, ice tint 12, blue 10, silver 3">
+      <div style="flex:50;background:#fff;color:var(--ff-muted)">White 50%</div>
+      <div style="flex:25;background:#061E3C;color:#fff">Navy 25%</div>
+      <div style="flex:12;background:#EEF4FB;color:var(--ff-navy)">Tint 12%</div>
+      <div style="flex:10;background:#0066CC;color:#fff">10%</div>
+      <div style="flex:3;background:#B4B4B4"></div>
+    </div>
+    <div class="legend"><span>Blue 10%</span><span>Silver 3%, inside the mark only</span></div>
+
+    <h3>Contrast</h3>
+    <p>WCAG 2.2 ratios for the pairs we actually use. AA needs 4.5 for body text, 3 for large text and UI.</p>
+    <div class="table-scroll">
+    <table class="contrast">
+      <thead><tr><th>Text</th><th>On</th><th>Ratio</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill" style="background:#061E3C;color:#fff">Navy</span></td><td>White</td><td>16.7 : 1</td><td>Any size</td></tr>
+        <tr><td><span class="pill" style="background:#0B1424;color:#fff">Ink</span></td><td>White</td><td>18.4 : 1</td><td>Any size</td></tr>
+        <tr><td><span class="pill" style="background:#0066CC;color:#fff">Blue</span></td><td>White / tint</td><td>5.6 / 5.0 : 1</td><td>Links, buttons, any size</td></tr>
+        <tr><td><span class="pill" style="background:#5A6678;color:#fff">Muted</span></td><td>White / tint</td><td>5.8 / 5.3 : 1</td><td>Secondary text</td></tr>
+        <tr><td><span class="pill" style="background:#3D8EF0;color:#061E3C">Blue 400</span></td><td>Navy</td><td>5.0 : 1</td><td>Accents on dark</td></tr>
+        <tr><td><span class="pill" style="background:#0066CC;color:#fff">Blue</span></td><td>Navy</td><td>3.0 : 1</td><td>Large display only; prefer Blue 400</td></tr>
+        <tr><td><span class="pill" style="background:#B4B4B4;color:#061E3C">Silver</span></td><td>White</td><td>2.1 : 1</td><td>Never for text</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 TYPE -->
+<section id="type">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">03 · Typography</div>
+      <div>
+        <h2 class="display">Archivo, two widths</h2>
+        <p>One variable family from Google Fonts. Expanded (width 118%, weight 700–800) for headlines: wide and steady, like a trailer side. Normal width (400/500) for reading. Sentence case everywhere, no all-caps labels.</p>
+      </div>
+    </div>
+    <div class="specimen">
+      <div class="big">Aa Ăă<br>Șș Țț</div>
+      <div class="chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>ĂÂÎȘȚ ăâîșț 0123456789 € &amp; ·<br><br><a href="https://fonts.google.com/specimen/Archivo">Archivo on Google Fonts</a></div>
+    </div>
+    <div class="scale">
+      <div class="row"><small>Display · 61 px<br>expanded 750, −1.5%</small><div class="display" style="font-size:clamp(34px,5vw,61px);line-height:1.05">Transport frigorific internațional</div></div>
+      <div class="row"><small>Heading 2 · 39 px<br>expanded 750</small><div class="display" style="font-size:clamp(28px,3.6vw,39px);line-height:1.1">FTL &amp; grupaj pentru industria alimentară</div></div>
+      <div class="row"><small>Heading 3 · 25 px<br>expanded 700</small><div class="display" style="font-size:25px;font-weight:700;line-height:1.2">Netherlands, Belgium, Germany, UK – Romania</div></div>
+      <div class="row"><small>Body · 16 px / 1.6<br>normal 400</small><div style="max-width:62ch">International refrigerated transport, full truck load and groupage, for meat, fish and seafood, fruit and vegetables, dairy and other chilled or frozen food.</div></div>
+      <div class="row"><small>Small · 14 px<br>normal 500, muted</small><div style="font-size:14px;font-weight:500;color:var(--ff-muted)">ARR License No. 0247913 · Transport Exchange ID: BM 312078</div></div>
+    </div>
+    <p style="margin-top:20px;font-size:14px;color:var(--ff-muted)">Embed: <code>https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;display=swap</code> · Fallback: system-ui, sans-serif.</p>
+  </div>
+</section>
+
+<!-- 04 VOICE -->
+<section id="voice">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">04 · Voice and tone</div>
+      <div>
+        <h2 class="display">Say less, prove more</h2>
+        <p>We talk like a good dispatcher: short sentences, exact facts, calm under pressure. We write in Romanian and English with the same tone.</p>
+      </div>
+    </div>
+    <div class="voice">
+      <div class="v"><b>Precise</b><p>Lanes, temperatures, licence numbers. Facts we can stand behind, never guesses.</p></div>
+      <div class="v"><b>Calm</b><p>Cold chain is serious work. No exclamation marks, no hype, no urgency theatre.</p></div>
+      <div class="v"><b>Direct</b><p>Lead with what the client needs: route, load type, how to reach us.</p></div>
+    </div>
+    <div class="say">
+      <div>
+        <h4>We say</h4>
+        <p>Transport frigorific internațional, FTL și grupaj, pentru carne, pește, fructe, legume și lactate.<span>International refrigerated transport, FTL and groupage, for meat, fish, fruit, vegetables and dairy.</span></p>
+        <p>Rute principale: Olanda, Belgia, Germania, Marea Britanie – România, Ungaria, Polonia, Bulgaria.<span>Core lanes: Netherlands, Belgium, Germany, UK – Romania, Hungary, Poland, Bulgaria.</span></p>
+        <p>Sunați-ne la +40 757 732 732.<span>Call us on +40 757 732 732.</span></p>
+      </div>
+      <div class="no">
+        <h4>We avoid</h4>
+        <p>„Cei mai buni transportatori din Europa!”<span>Superlatives and claims we cannot prove.</span></p>
+        <p>Cifre, certificări sau premii neverificate.<span>Fleet sizes, certifications or awards that are not on record.</span></p>
+        <p>TEXT ÎN MAJUSCULE, săgeți și semne de exclamare.<span>All caps, arrows and exclamation marks.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 LOGO USE -->
+<section id="usage">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">05 · Logo use</div>
+      <div>
+        <h2 class="display">Do and don’t</h2>
+        <p>The mark only works when it is left alone. If a layout needs the logo to change, change the layout.</p>
+      </div>
+    </div>
+    <div class="dd">
+      <figure class="ok"><div class="st on-white"><img src="logo/ffd-logo-horizontal.svg" alt=""></div><figcaption><b>Do</b>Full colour on white or tint</figcaption></figure>
+      <figure class="ok"><div class="st on-navy"><img src="logo/ffd-logo-horizontal-white.svg" alt=""></div><figcaption><b>Do</b>White version on navy</figcaption></figure>
+      <figure class="ok"><div class="st" style="background:#3a4a5c"><img src="logo/ffd-logo-horizontal-white.svg" alt=""></div><figcaption><b>Do</b>White version on calm, dark photos</figcaption></figure>
+      <figure class="ok"><div class="st on-tint"><img src="logo/ffd-mark.svg" alt=""></div><figcaption><b>Do</b>Mark alone when space is tight</figcaption></figure>
+      <figure class="bad"><div class="st on-white"><img src="logo/ffd-logo-horizontal.svg" alt="" style="transform:scaleX(1.45)"></div><figcaption><b>Don’t</b>Stretch or squash</figcaption></figure>
+      <figure class="bad"><div class="st on-white"><img src="logo/ffd-logo-horizontal.svg" alt="" style="filter:hue-rotate(140deg) saturate(2)"></div><figcaption><b>Don’t</b>Recolour</figcaption></figure>
+      <figure class="bad"><div class="st on-white"><img src="logo/ffd-logo-horizontal.svg" alt="" style="transform:rotate(-12deg);filter:drop-shadow(4px 6px 4px rgba(0,0,0,.45))"></div><figcaption><b>Don’t</b>Rotate or add effects</figcaption></figure>
+      <figure class="bad"><div class="st" style="background:#0066CC"><img src="logo/ffd-logo-horizontal.svg" alt=""></div><figcaption><b>Don’t</b>Place on low-contrast colour</figcaption></figure>
+    </div>
+    <div class="dd" style="margin-top:20px;grid-template-columns:1fr">
+      <figure class="bad"><div class="st on-white" style="height:130px"><div class="fake"><img src="logo/ffd-mark.svg" alt=""><span>Frigo Food Distribution</span></div></div><figcaption><b>Don’t</b>Retype the wordmark or rearrange the parts. Use the files.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 06 APPLICATIONS -->
+<section id="applications">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">06 · Applications</div>
+      <div>
+        <h2 class="display">In use</h2>
+        <p>Every template below is a live file in this folder. Open it to copy, print or edit.</p>
+      </div>
+    </div>
+
+    <div class="app">
+      <div class="livery"><img src="truck-livery.svg" alt="Reefer semi-trailer livery"></div>
+      <div class="cap"><b>Truck livery</b><span>Side view, white trailer, navy skirt band</span><a href="truck-livery.svg">Open SVG</a></div>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px;align-items:start">
+      <div class="app">
+        <div class="frame" data-w="1000" data-h="620" style="aspect-ratio:1000/620"><iframe src="business-card.html" width="1000" height="620" title="Business card preview" loading="lazy" tabindex="-1"></iframe></div>
+        <div class="cap"><b>Business card</b><span>85 × 55 mm, 3 mm bleed</span><a href="business-card.html">Open</a></div>
+      </div>
+      <div class="app">
+        <div class="frame" data-w="900" data-h="900" style="aspect-ratio:1/1"><iframe src="email-signature.html" width="900" height="900" title="Email signature preview" loading="lazy" tabindex="-1"></iframe></div>
+        <div class="cap"><b>Email signature</b><span>EN and RO, table-based, inline styles</span><a href="email-signature.html">Open</a></div>
+      </div>
+      <div class="app">
+        <div class="frame" data-w="900" data-h="1200" style="aspect-ratio:3/4"><iframe src="letterhead.html" width="900" height="1200" title="Letterhead preview" loading="lazy" tabindex="-1"></iframe></div>
+        <div class="cap"><b>Letterhead</b><span>A4, legal footer</span><a href="letterhead.html">Open</a></div>
+      </div>
+      <div style="display:grid;gap:20px;align-content:start">
+        <div class="app"><img src="social/og-image.png" alt="Open Graph share image"><div class="cap"><b>Share image</b><span>1200 × 630</span><span><a href="social/og-image.png">PNG</a> · <a href="social/og-image.svg">SVG</a></span></div></div>
+        <div class="app"><img src="social/linkedin-banner.png" alt="LinkedIn banner"><div class="cap"><b>LinkedIn banner</b><span>1584 × 396</span><span><a href="social/linkedin-banner.png">PNG</a> · <a href="social/linkedin-banner.svg">SVG</a></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 DOWNLOADS -->
+<section id="downloads" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">07 · Downloads</div>
+      <div>
+        <h2 class="display">Files</h2>
+        <p>SVG is the master for screens and print. PNG exists only where a platform refuses SVG (email, social previews, iOS).</p>
+      </div>
+    </div>
+    <div class="table-scroll">
+    <table class="files">
+      <thead><tr><th>File</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><a href="logo/ffd-logo-horizontal.svg" download>logo/ffd-logo-horizontal.svg</a></td><td>Primary logo, website header, documents</td></tr>
+        <tr><td><a href="logo/ffd-logo-horizontal-white.svg" download>logo/ffd-logo-horizontal-white.svg</a></td><td>Primary logo on navy or dark images</td></tr>
+        <tr><td><a href="logo/ffd-logo-horizontal.png" download>logo/ffd-logo-horizontal.png</a></td><td>760 × 201 transparent PNG for email signatures</td></tr>
+        <tr><td><a href="logo/ffd-logo-stacked.svg" download>logo/ffd-logo-stacked.svg</a></td><td>Stacked logo with rule, snowflake and tagline</td></tr>
+        <tr><td><a href="logo/ffd-mark.svg" download>logo/ffd-mark.svg</a></td><td>Monogram, full colour</td></tr>
+        <tr><td><a href="logo/ffd-mark-white.svg" download>logo/ffd-mark-white.svg</a></td><td>Monogram on dark</td></tr>
+        <tr><td><a href="logo/favicon.svg" download>logo/favicon.svg</a></td><td>Browser tab icon, 16–32 px</td></tr>
+        <tr><td><a href="logo/apple-touch-icon.png" download>logo/apple-touch-icon.png</a></td><td>180 × 180 home-screen icon</td></tr>
+        <tr><td><a href="tokens.css" download>tokens.css</a></td><td>Colour, type, radius and shadow tokens for the website</td></tr>
+        <tr><td><a href="social/og-image.png" download>social/og-image.png</a></td><td>Website share preview (og:image)</td></tr>
+        <tr><td><a href="social/linkedin-banner.png" download>social/linkedin-banner.png</a></td><td>LinkedIn page cover</td></tr>
+        <tr><td><a href="truck-livery.svg" download>truck-livery.svg</a></td><td>Livery concept, website hero illustration</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <img src="logo/ffd-logo-horizontal-white.svg" alt="Frigo Food Distribution">
+      Frigo Food Distribution SRL · Șos. Cernica nr. 96, Pantelimon, jud. Ilfov, Romania<br>
+      CUI: 41776220 · EUID: ROONRC.J2019004582230 · ARR License No. 0247913
+    </div>
+    <div><a href="tel:+40757732732">+40 757 732 732</a> · <a href="mailto:office@frigofood.ro">office@frigofood.ro</a> · <a href="https://www.frigofood.ro">www.frigofood.ro</a></div>
+  </div>
+</footer>
+
+<script>
+  // Scale the live template previews to their frames.
+  function fit() {
+    document.querySelectorAll('.frame').forEach(function (f) {
+      var i = f.querySelector('iframe');
+      i.style.transform = 'scale(' + f.clientWidth / Number(f.dataset.w) + ')';
+    });
+  }
+  addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>

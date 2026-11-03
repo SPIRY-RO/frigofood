@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business card · Frigo Food Distribution</title>
+<link rel="icon" href="logo/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* Trim 85 × 55 mm. Each page includes 3 mm bleed on every side: 91 × 61 mm.
+     Keep text inside the safe zone (4 mm inside trim). Export to PDF via Print, scale 100 %, no margins. */
+  @page { size: 91mm 61mm; margin: 0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; font-family: var(--ff-font-sans); color: var(--ff-ink); background: #E4E9F0; }
+
+  .intro { max-width: 760px; margin: 0 auto; padding: 48px 20px 8px; font-size: 15px; line-height: 1.6; color: var(--ff-muted); }
+  .intro h1 { font: var(--ff-display-weight) var(--ff-text-2xl)/1.15 var(--ff-font-display); font-stretch: var(--ff-display-stretch); color: var(--ff-navy); margin: 8px 0; }
+  .intro a { color: var(--ff-blue); font-size: 14px; text-decoration: none; }
+  .sheet { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; padding: 32px 20px 72px; }
+  figure { margin: 0; }
+  figcaption { font-size: 13px; color: var(--ff-muted); margin-top: 10px; text-align: center; }
+
+  /* the bleed box */
+  .card { position: relative; width: 91mm; height: 61mm; overflow: hidden; background: #fff; box-shadow: var(--ff-shadow-lg); }
+  /* trim guide, screen only */
+  .card::after { content: ""; position: absolute; inset: 3mm; outline: 0.2mm dashed rgba(6, 30, 60, .28); pointer-events: none; }
+  .card.dark::after { outline-color: rgba(255, 255, 255, .35); }
+  /* safe zone = trim + 4 mm */
+  .safe { position: absolute; inset: 7mm; }
+
+  /* front */
+  .front .logo { position: absolute; top: 0; left: 0; height: 9.6mm; }
+  .front .person { position: absolute; left: 0; top: 15.5mm; }
+  .front .name { font-family: var(--ff-font-display); font-stretch: var(--ff-display-stretch); font-weight: 700; font-size: 10.5pt; color: var(--ff-navy); letter-spacing: -0.01em; line-height: 1.15; }
+  .front .role { font-size: 7.5pt; color: var(--ff-blue); font-weight: 500; margin-top: 0.8mm; }
+  .front .contact { position: absolute; left: 0; bottom: 1mm; font-size: 7pt; line-height: 1.55; color: var(--ff-ink); }
+  .front .contact b { display: inline-block; width: 4.2mm; color: var(--ff-blue); font-weight: 600; }
+  /* full-bleed band: 1.4 mm visible after trim, the rest runs into the bleed */
+  .front .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 4.4mm; background: var(--ff-navy); }
+  .front .rule::before { content: ""; position: absolute; left: 0; top: 0; width: 25mm; height: 100%; background: var(--ff-blue); }
+
+  /* back */
+  .back { background: var(--ff-navy); color: #fff; }
+  .back .mark { position: absolute; left: 0; top: 0; height: 11mm; }
+  .back .claim { position: absolute; left: 0; bottom: 8.5mm; font-family: var(--ff-font-display); font-stretch: var(--ff-display-stretch); font-weight: 700; font-size: 9pt; line-height: 1.25; }
+  .back .claim span { color: var(--ff-blue-400); }
+  .back .legal { position: absolute; left: 0; bottom: 0; font-size: 5.6pt; line-height: 1.5; color: var(--ff-silver-300); }
+  .back .web { position: absolute; right: 0; top: 1mm; font-size: 7pt; font-weight: 600; color: #fff; letter-spacing: 0.02em; }
+
+  @media print {
+    body { background: none; }
+    .intro, figcaption { display: none; }
+    .sheet { display: block; padding: 0; }
+    .card { box-shadow: none; break-after: page; }
+    .card::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="intro">
+  <a href="index.html">Brand guidelines</a>
+  <h1>Business card</h1>
+  <p>85 × 55 mm trim, 3 mm bleed (page size 91 × 61 mm), 4 mm safe zone. The dashed line marks the trim and does not print. Print to PDF at 100 % with no margins and background graphics on, then send to the printer as a two-page PDF (front, back). Recommended stock: 400 g/m² uncoated or soft-touch matte.</p>
+</div>
+
+<div class="sheet">
+  <figure>
+    <div class="card front">
+      <div class="safe">
+        <img class="logo" src="logo/ffd-logo-horizontal.svg" alt="Frigo Food Distribution">
+        <div class="person">
+          <div class="name">Nume Prenume</div>
+          <div class="role">Funcție</div>
+        </div>
+        <div class="contact">
+          <div><b>T</b>+40 757 732 732</div>
+          <div><b>E</b>office@frigofood.ro</div>
+          <div><b>W</b>www.frigofood.ro</div>
+          <div><b>A</b>Șos. Cernica nr. 96, Pantelimon, jud. Ilfov</div>
+        </div>
+      </div>
+      <div class="rule"></div>
+    </div>
+    <figcaption>Front</figcaption>
+  </figure>
+
+  <figure>
+    <div class="card back dark">
+      <div class="safe">
+        <img class="mark" src="logo/ffd-mark-white.svg" alt="">
+        <div class="web">www.frigofood.ro</div>
+        <div class="claim">Transport frigorific internațional<br><span>FTL &amp; Grupaj</span></div>
+        <div class="legal">Frigo Food Distribution SRL · CUI: 41776220 · Licență ARR nr. 0247913<br>EUID: ROONRC.J2019004582230 · Transport Exchange ID: BM 312078</div>
+      </div>
+    </div>
+    <figcaption>Back</figcaption>
+  </figure>
+</div>
+</body>
+</html>
