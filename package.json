@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node build.mjs",
     "check": "node scripts/quote-check.mjs",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "package": "sh scripts/package.sh"
   },
   "engines": {
     "node": "24.x"

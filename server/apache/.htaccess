@@ -1,0 +1,26 @@
+# Apache / cPanel settings for the ready-built site (the Vercel equivalent is vercel.json).
+AddDefaultCharset utf-8
+AddType application/manifest+json .webmanifest
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+
+# One address for search engines: frigofood.ro -> https://www.frigofood.ro (web only; email is not affected).
+RewriteCond %{HTTP_HOST} ^frigofood\.ro$ [NC]
+RewriteRule ^ https://www.frigofood.ro%{REQUEST_URI} [L,R=301]
+
+# The quote form posts to /api/quote.
+RewriteRule ^api/quote/?$ api/quote.php [L]
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  <FilesMatch "\.(css|js|svg|png|ico)$">
+    Header set Cache-Control "public, max-age=3600, stale-while-revalidate=86400"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>

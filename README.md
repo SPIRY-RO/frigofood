@@ -72,7 +72,8 @@ Until then the function answers 503 and the form offers a pre-filled email plus 
 
 ### Changing the form
 
-- **Fields:** a field exists in two places, the markup in `renderQuoteForm` (`js/site.js`) and the `FIELDS` list in `api/quote.js` (label in the email, required, max length, type). Add or remove it in both. `npm run check` tests the function without sending mail.
+- **Fields:** a field exists in three places: the markup in `renderQuoteForm` (`js/site.js`), the `FIELDS` list in `api/quote.js` (Vercel) and `$FIELDS` in `server/apache/api/quote.php` (classic PHP hosting). Add or remove it in all three.
+- **Classic hosting:** `server/apache/` holds the PHP form handler and `.htaccess` that `npm run package` adds to the ready-to-upload `site/` folder. See `DEPLOY.md`. `npm run check` tests the function without sending mail.
 - **Texts:** all form labels, errors and the thank-you message are in `renderQuoteForm`, in both languages (`t('ro', 'en')`).
 - **Spam limits:** `MIN_FILL_MS` (minimum time on the form) and `rateLimited()` (5 requests per IP per 10 minutes) in `api/quote.js`.
 - **Domains:** the site's own domain is always accepted. `ALLOWED_HOSTS` only matters for posting from another domain.

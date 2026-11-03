@@ -10,3 +10,4 @@ scripts/
 data/README*
 * [0-9].*
 exports/
+server/

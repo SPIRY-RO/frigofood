@@ -7,7 +7,9 @@ import { feature } from 'topojson-client';
 
 const require = createRequire(import.meta.url);
 const SITE = JSON.parse(readFileSync('data/site.json', 'utf8'));
-const { base: BASE, pages: PAGES, contact: C, routes: ROUTES } = SITE;
+const { pages: PAGES, contact: C, routes: ROUTES } = SITE;
+// SITE_BASE overrides the address for one build (the classic-hosting copy is built for www.frigofood.ro).
+const BASE = process.env.SITE_BASE || SITE.base;
 const OUT = 'public';
 const LANGS = ['ro', 'en'];
 // CSS and JS are cached for an hour (vercel.json); the version makes each deploy fetch fresh copies.
