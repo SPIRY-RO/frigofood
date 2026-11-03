@@ -50,7 +50,9 @@ The form (`js/site.js` → `renderQuoteForm`) posts JSON to `/api/quote`. `api/q
    | `QUOTE_FROM` | optional; sender, must be a mailbox on the same server; default `SMTP_USER` |
 
 2. Redeploy (`vercel --prod`, or Deployments → Redeploy). Environment changes only apply to new deployments.
-3. Open `https://<domain>/api/quote` in a browser. It answers `{"ok":true,"mail":"configured"}` when the variables are present.
+3. Open `https://<domain>/api/quote` in a browser. It answers `"mail":"configured"` when the variables are present, and otherwise lists the `missing` ones. It also shows the host, port and user it uses (never the password).
+
+`SMTP_HOST`, `SMTP_PORT` and `SMTP_USER` are already set in Production; only `SMTP_PASS` remains.
 4. Send one test request from the contact page and check that it arrives.
 
 Until then the function answers 503 and the form offers a pre-filled email plus the phone numbers, so no request is lost.

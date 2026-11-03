@@ -81,7 +81,12 @@ function transport() {
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') return res.status(200).json({ ok: true, mail: transport() ? 'configured' : 'not_configured' });
+  if (req.method === 'GET') {
+    const { SMTP_HOST, SMTP_PORT = '465', SMTP_USER } = process.env;
+    const missing = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'].filter((n) => !process.env[n]);
+    // Never report the password itself, only whether it is set.
+    return res.status(200).json({ ok: true, mail: transport() ? 'configured' : 'not_configured', missing, host: SMTP_HOST || null, port: +SMTP_PORT, user: SMTP_USER || null });
+  }
   if (req.method !== 'POST') return res.status(405).setHeader('Allow', 'GET, POST').json({ error: 'method' });
 
   const origin = req.headers.origin || req.headers.referer || '';
