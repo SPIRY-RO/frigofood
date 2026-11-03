@@ -480,6 +480,7 @@ function buildPage(page, lang) {
   let html = (ROUTE_PAGES[page] ? routeSource(ROUTE_PAGES[page]) : readFileSync(page, 'utf8'))
     .replace('<!--ff:faq-->', () => faqSection(FAQ.general))
     .replace('<!--ff:org-->', () => ld(orgData('ro'), 'ro') + ld(orgData('en'), 'en'))
+    .replace(/<!--ff:base-->/g, BASE)
     .replace(/<!--ff:phones-->/g, phoneLinks())
     .replace(/<!--ff:phones-text-->/g, C.phones.join(', '))
     .replace(/"<!--ff:phones-json-->"/g, JSON.stringify(C.phones.map((p) => p.replace(/\s/g, ''))));
