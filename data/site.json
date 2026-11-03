@@ -1,0 +1,43 @@
+{
+  "base": "https://frigofood.vercel.app",
+  "pages": {
+    "index.html": "index.html",
+    "transport-ftl.html": "ftl-transport.html",
+    "grupaj-frigorific.html": "refrigerated-groupage.html",
+    "rute.html": "routes.html",
+    "despre-noi.html": "about-us.html",
+    "contact.html": "contact.html",
+    "confidentialitate.html": "privacy.html",
+    "404.html": "404.html"
+  },
+  "contact": {
+    "company": "FRIGO FOOD DISTRIBUTION SRL",
+    "phone": "+40 757 732 732",
+    "phoneHref": "tel:+40757732732",
+    "email": "office@frigofood.ro",
+    "street": "Șos. Cernica nr. 278",
+    "city": "Pantelimon",
+    "county": { "ro": "jud. Ilfov", "en": "Ilfov County" },
+    "country": { "ro": "România", "en": "Romania" },
+    "cui": "RO41776220",
+    "euid": "ROONRC.J2019004582230",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%C8%98oseaua%20Cernica%20278%2C%20Pantelimon%2C%20Ilfov"
+  },
+  "routes": {
+    "hub": { "code": "RO", "id": "642", "ro": "România", "en": "Romania", "lon": 24.9, "lat": 45.9 },
+    "countries": [
+      { "code": "PL", "id": "616", "ro": "Polonia", "en": "Poland", "lon": 19.3, "lat": 52.1 },
+      { "code": "NL", "id": "528", "ro": "Olanda", "en": "Netherlands", "lon": 5.5, "lat": 52.3, "dx": -11, "dy": -6, "anchor": "end" },
+      { "code": "BE", "id": "056", "ro": "Belgia", "en": "Belgium", "lon": 4.6, "lat": 50.7, "dx": -11, "dy": 12, "anchor": "end" },
+      { "code": "DE", "id": "276", "ro": "Germania", "en": "Germany", "lon": 10.3, "lat": 51.0 },
+      { "code": "ES", "id": "724", "ro": "Spania", "en": "Spain", "lon": -3.7, "lat": 40.3 },
+      { "code": "FR", "id": "250", "ro": "Franța", "en": "France", "lon": 2.4, "lat": 47.0 },
+      { "code": "IT", "id": "380", "ro": "Italia", "en": "Italy", "lon": 10.9, "lat": 44.6 },
+      { "code": "HU", "id": "348", "ro": "Ungaria", "en": "Hungary", "lon": 19.3, "lat": 47.1 },
+      { "code": "DK", "id": "208", "ro": "Danemarca", "en": "Denmark", "lon": 9.2, "lat": 56.1 },
+      { "code": "SE", "id": "752", "ro": "Suedia", "en": "Sweden", "lon": 15.0, "lat": 59.4 },
+      { "code": "BG", "id": "100", "ro": "Bulgaria", "en": "Bulgaria", "lon": 25.3, "lat": 42.7 },
+      { "code": "UK", "id": "826", "ro": "Marea Britanie", "en": "United Kingdom", "lon": -1.5, "lat": 52.6, "dx": -11, "anchor": "end", "onRequest": true }
+    ]
+  }
+}

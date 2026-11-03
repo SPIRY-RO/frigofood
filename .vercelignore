@@ -4,3 +4,7 @@ brand/source/
 *.py
 .claude/
 .env*
+node_modules/
+public/
+scripts/
+data/README*
