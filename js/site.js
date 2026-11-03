@@ -75,7 +75,7 @@ let mapPromise;
 const loadMap = () => (mapPromise ??= new Promise((resolve, reject) => {
   if (window.FF_MAP) return resolve(window.FF_MAP);
   const s = document.createElement('script');
-  s.src = '/js/europe-map.js';
+  s.src = `/js/europe-map.js?v=${FF.v}`;
   s.onload = () => resolve(window.FF_MAP);
   s.onerror = reject;
   document.head.append(s);

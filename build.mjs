@@ -1,6 +1,7 @@
 // Builds public/: one Romanian and one English copy of every page from the bilingual sources.
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 import { geoConicConformal, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 
@@ -9,6 +10,8 @@ const SITE = JSON.parse(readFileSync('data/site.json', 'utf8'));
 const { base: BASE, pages: PAGES, contact: C, routes: ROUTES } = SITE;
 const OUT = 'public';
 const LANGS = ['ro', 'en'];
+// CSS and JS are cached for an hour (vercel.json); the version makes each deploy fetch fresh copies.
+const V = createHash('sha1').update(['css/site.css', 'js/site.js', 'data/site.json', 'package-lock.json'].map((f) => readFileSync(f)).join('')).digest('hex').slice(0, 8);
 
 const url = (page, lang) => {
   const file = lang === 'en' ? PAGES[page] : page;
@@ -226,6 +229,7 @@ function routeList(lang) {
 function headExtras(lang, page, title, desc, indexable) {
   const abs = (l) => BASE + url(page, l);
   const ff = {
+    v: V,
     lang,
     page,
     pages: Object.fromEntries(Object.keys(PAGES).map((p) => [p, { ro: url(p, 'ro'), en: url(p, 'en') }])),
@@ -255,8 +259,8 @@ function headExtras(lang, page, title, desc, indexable) {
   <link rel="preconnect" href="https://images.unsplash.com">
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
   <script>window.FF=${JSON.stringify(ff)}</script>
-  <script src="/js/icons.js" defer></script>
-  <script src="/js/site.js" defer></script>`;
+  <script src="/js/icons.js?v=${V}" defer></script>
+  <script src="/js/site.js?v=${V}" defer></script>`;
 }
 
 /* ---------- Pages ---------- */
@@ -291,6 +295,7 @@ function buildPage(page, lang) {
     .replace('<div id="site-footer"></div>', footer(lang))
     .replace(/<!--ff:cta-->/g, cta(lang))
     .replace('<div class="route-list" data-route-list></div>', routeList(lang))
+    .replace('href="/css/site.css"', `href="/css/site.css?v=${V}"`)
     .replace(/href="\/?([a-z0-9-]+\.html)([?#][^"]*)?"/g, (m, p, rest = '') => (PAGES[p] ? `href="${url(p, lang)}${rest}"` : m));
   return inlineIcons(html);
 }
