@@ -3,3 +3,4 @@ legacy/
 brand/source/
 *.py
 .claude/
+.env*
