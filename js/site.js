@@ -20,12 +20,26 @@ function initHeader() {
   if (!header) return;
   const nav = document.getElementById('nav');
   const toggle = header.querySelector('.menu-toggle');
-  toggle.addEventListener('click', () => {
+  const setMenu = (open) => {
     nav.style.setProperty('--nav-top', `${header.getBoundingClientRect().bottom}px`);
-    const open = nav.classList.toggle('is-open');
+    nav.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? t('Închide meniul', 'Close menu') : t('Deschide meniul', 'Open menu'));
+    toggle.innerHTML = open ? icon('x') : icon('menu');
     document.body.style.overflow = open ? 'hidden' : '';
+  };
+  toggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+  // Links to a section of the same page would otherwise leave the menu covering it.
+  nav.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  matchMedia('(min-width: 1081px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
+
+  // Mobile "Call" button: a list of numbers that closes on outside tap or Escape.
+  const sheet = document.querySelector('.callsheet');
+  document.addEventListener('click', (e) => { if (sheet?.open && !sheet.contains(e.target)) sheet.open = false; });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (nav.classList.contains('is-open')) { setMenu(false); toggle.focus(); }
+    if (sheet?.open) { sheet.open = false; sheet.querySelector('summary').focus(); }
   });
   // Switching language keeps the page, the query (route prefill) and the anchor.
   header.querySelectorAll('[data-lang-link]').forEach((a) => {
@@ -390,15 +404,16 @@ function renderQuoteForm(root) {
       } else if (out.error === 'too_fast') {
         showAlert(t('Formularul a fost trimis prea repede. Verifică datele și apasă din nou pe „Trimite solicitarea”.', 'The form was sent too quickly. Check the details and press "Send request" again.'));
       } else if (out.error === 'rate_limited') {
-        showAlert(t(`Am primit deja mai multe solicitări de la tine. Încearcă din nou peste câteva minute sau sună la <a href="${C.phoneHref}">${C.phone}</a>.`,
-          `We have already received several requests from you. Try again in a few minutes or call <a href="${C.phoneHref}">${C.phone}</a>.`));
+        const phones = C.phones.map((p) => `<a href="${p.href}">${p.label}</a>`).join(', ');
+        showAlert(t(`Am primit deja mai multe solicitări de la tine. Încearcă din nou peste câteva minute sau sună la ${phones}.`,
+          `We have already received several requests from you. Try again in a few minutes or call ${phones}.`));
       } else {
         throw new Error(out.error || res.status);
       }
     } catch {
       showAlert(`${t('Solicitarea nu a putut fi trimisă automat. Trimite-o prin e-mail sau sună-ne.', 'The request could not be sent automatically. Send it by email or call us.')}
         <span class="btn-row"><a class="btn btn--primary" href="${mailtoFor(d)}">${icon('mail')}${t('Trimite prin e-mail', 'Send by email')}</a>
-        <a class="btn btn--ghost" href="${C.phoneHref}">${icon('phone')}${C.phone}</a></span>`);
+        ${C.phones.map((p) => `<a class="btn btn--ghost" href="${p.href}">${icon('phone')}${p.label}</a>`).join('')}</span>`);
     } finally {
       button.disabled = false;
       label.textContent = t('Trimite solicitarea', 'Send request');

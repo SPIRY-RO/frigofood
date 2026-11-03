@@ -16,6 +16,8 @@ const url = (page, lang) => {
   return file === 'index.html' ? dir : dir + file;
 };
 const tr = (lang) => (ro, en) => (lang === 'en' ? en : ro);
+const tel = (phone) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+const phoneLinks = (cls = '') => C.phones.map((p) => `<a${cls ? ` class="${cls}"` : ''} href="${tel(p)}">${p}</a>`).join('');
 
 /* ---------- Language stripping: drop every element marked with the other language ---------- */
 
@@ -85,8 +87,8 @@ function header(lang, page) {
     <div class="wrap">
       <span class="topstrip__note">${t('Casă de expediții pentru transport frigorific internațional', 'Refrigerated freight forwarding across Europe')}</span>
       <span class="topstrip__contacts">
-        <a href="${C.phoneHref}">${icon('phone')}${C.phone}</a>
-        <a href="mailto:${C.email}">${icon('mail')}${C.email}</a>
+        <span class="topstrip__phones">${icon('phone')}${phoneLinks()}</span>
+        <a class="topstrip__mail" href="mailto:${C.email}">${icon('mail')}${C.email}</a>
       </span>
     </div>
   </div>
@@ -95,7 +97,14 @@ function header(lang, page) {
       <a class="brand" href="${url('index.html', lang)}" aria-label="Frigo Food Distribution">
         <img src="/brand/logo/ffd-logo-horizontal.svg" alt="Frigo Food Distribution" width="220" height="44">
       </a>
-      <nav class="nav" id="nav" aria-label="${t('Meniu principal', 'Main menu')}"><ul>${links}</ul></nav>
+      <nav class="nav" id="nav" aria-label="${t('Meniu principal', 'Main menu')}"><ul>${links}</ul>
+        <div class="nav__contact">
+          <a class="btn btn--primary" href="${url('contact.html', lang)}#oferta">${t('Solicită o ofertă', 'Request a quote')}</a>
+          <p class="nav__label">${t('Sună-ne', 'Call us')}</p>
+          <div class="nav__phones">${C.phones.map((p) => `<a href="${tel(p)}">${icon('phone')}${p}</a>`).join('')}</div>
+          <a class="nav__mail" href="mailto:${C.email}">${icon('mail')}${C.email}</a>
+        </div>
+      </nav>
       <div class="header__actions">
         <div class="lang" role="group" aria-label="${t('Limba', 'Language')}">
           ${switchTo('ro', 'RO', 'Română')}${switchTo('en', 'EN', 'English')}
@@ -135,7 +144,7 @@ function footer(lang) {
         <div>
           <h4>${C.company}</h4>
           <ul>
-            <li><a href="${C.phoneHref}">${C.phone}</a></li>
+            ${C.phones.map((p) => `<li><a href="${tel(p)}">${p}</a></li>`).join('')}
             <li><a href="mailto:${C.email}">${C.email}</a></li>
             <li><a href="${C.mapUrl}" target="_blank" rel="noopener">${C.street}, ${C.city}, ${t(C.county.ro, C.county.en)}, ${t(C.country.ro, C.country.en)}</a></li>
             <li><a href="${url('contact.html', lang)}">${t('Pagina de contact', 'Contact page')}</a></li>
@@ -155,7 +164,13 @@ function footer(lang) {
     </div>
   </footer>
   <div class="actionbar">
-    <a class="btn btn--ghost" href="${C.phoneHref}">${icon('phone')}${t('Sună', 'Call')}</a>
+    <details class="callsheet">
+      <summary class="btn btn--ghost">${icon('phone')}${t('Sună', 'Call')}</summary>
+      <div class="callsheet__list">
+        <p>${t('Alege numărul', 'Choose a number')}</p>
+        ${C.phones.map((p) => `<a href="${tel(p)}">${icon('phone')}${p}</a>`).join('')}
+      </div>
+    </details>
     <a class="btn btn--primary" href="${url('contact.html', lang)}#oferta">${t('Solicită o ofertă', 'Request a quote')}</a>
   </div>`;
 }
@@ -173,7 +188,7 @@ function cta(lang) {
             <ul class="cta-band__contact">
               <li><strong>${C.company}</strong></li>
               <li>${icon('mail')}<a href="mailto:${C.email}">${C.email}</a></li>
-              <li>${icon('phone')}<a href="${C.phoneHref}">${C.phone}</a></li>
+              <li>${icon('phone')}<span class="cta-band__phones">${phoneLinks()}</span></li>
               <li>${icon('map-pin')}${t('Pantelimon, județul Ilfov, România', 'Pantelimon, Ilfov County, Romania')}</li>
             </ul>
           </div>
@@ -215,7 +230,7 @@ function headExtras(lang, page, title, desc, indexable) {
     page,
     pages: Object.fromEntries(Object.keys(PAGES).map((p) => [p, { ro: url(p, 'ro'), en: url(p, 'en') }])),
     routes: ROUTES,
-    contact: { company: C.company, phone: C.phone, phoneHref: C.phoneHref, email: C.email },
+    contact: { company: C.company, phones: C.phones.map((p) => ({ label: p, href: tel(p) })), email: C.email },
   };
   const seo = indexable ? `
   <link rel="canonical" href="${abs(lang)}">
@@ -225,7 +240,8 @@ function headExtras(lang, page, title, desc, indexable) {
   return `
   <meta name="theme-color" content="#061e3c">
   <link rel="icon" href="/brand/logo/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/brand/logo/apple-touch-icon.png">${seo}
+  <link rel="apple-touch-icon" href="/brand/logo/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">${seo}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Frigo Food Distribution">
   <meta property="og:locale" content="${lang === 'en' ? 'en_GB' : 'ro_RO'}">
@@ -248,7 +264,11 @@ function headExtras(lang, page, title, desc, indexable) {
 const attr = (html, name) => (html.match(new RegExp(`\\s${name}="([^"]*)"`)) || [])[1];
 
 function buildPage(page, lang) {
-  let html = readFileSync(page, 'utf8');
+  // Phone placeholders go first: they may sit inside the title, description or JSON-LD.
+  let html = readFileSync(page, 'utf8')
+    .replace(/<!--ff:phones-->/g, phoneLinks())
+    .replace(/<!--ff:phones-text-->/g, C.phones.join(', '))
+    .replace(/"<!--ff:phones-json-->"/g, JSON.stringify(C.phones.map((p) => p.replace(/\s/g, ''))));
   const titleEn = attr(html, 'data-title-en');
   const descEn = attr(html, 'data-desc-en');
   html = html.replace(/\s(data-title-en|data-desc-en)="[^"]*"/g, '');
@@ -305,6 +325,12 @@ mkdirSync(`${OUT}/en`, { recursive: true });
 cpSync('css', `${OUT}/css`, { recursive: true });
 cpSync('js', `${OUT}/js`, { recursive: true });
 cpSync('brand', `${OUT}/brand`, { recursive: true, filter: (src) => !src.includes('brand/source') });
+cpSync('brand/logo/favicon.ico', `${OUT}/favicon.ico`);
+writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
+  name: 'Frigo Food Distribution', short_name: 'Frigo Food', start_url: '/', display: 'browser',
+  background_color: '#ffffff', theme_color: '#061e3c',
+  icons: [{ src: '/brand/logo/favicon.svg', sizes: 'any', type: 'image/svg+xml' }, { src: '/brand/logo/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+}));
 
 for (const page of Object.keys(PAGES)) {
   if (!existsSync(page)) throw new Error(`Missing source page ${page}`);

@@ -12,8 +12,7 @@
   },
   "contact": {
     "company": "FRIGO FOOD DISTRIBUTION SRL",
-    "phone": "+40 757 732 732",
-    "phoneHref": "tel:+40757732732",
+    "phones": ["+40 757 732 732", "+40 741 153 154", "+40 752 018 060"],
     "email": "office@frigofood.ro",
     "street": "Șos. Cernica nr. 278",
     "city": "Pantelimon",

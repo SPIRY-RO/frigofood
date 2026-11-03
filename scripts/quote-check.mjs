@@ -39,6 +39,11 @@ assert.equal(trap.code, 200);
 assert.equal(trap.payload.preview, undefined, 'honeypot must not send');
 
 assert.equal((await call(valid, { origin: 'https://evil.example' })).code, 403);
+assert.equal((await call(valid, { origin: 'https://transport.example', host: 'transport.example' })).code, 200, 'own domain is allowed');
+
+const status = { code: 0, payload: null, status(c) { this.code = c; return this; }, setHeader() { return this; }, json(p) { this.payload = p; return this; } };
+await handler({ method: 'GET', headers: {} }, status);
+assert.deepEqual([status.code, status.payload.mail], [200, 'configured']);
 
 const injected = await call({ ...valid, fromCity: 'Rotterdam\r\nBcc: x@evil.example' });
 assert.ok(!/\n/.test(injected.payload.preview.subject), 'subject must stay on one line');

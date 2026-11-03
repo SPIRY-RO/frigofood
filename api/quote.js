@@ -1,5 +1,5 @@
 // Receives the quote form and emails it to the office.
-// Configure in Vercel: SMTP_HOST, SMTP_PORT (465 or 587), SMTP_USER, SMTP_PASS, optional QUOTE_TO / QUOTE_FROM.
+// Settings: see .env.example and the "Quote form" section of README.md. GET /api/quote reports whether mail is configured.
 import nodemailer from 'nodemailer';
 
 const FIELDS = {
@@ -81,12 +81,15 @@ function transport() {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).setHeader('Allow', 'POST').json({ error: 'method' });
+  if (req.method === 'GET') return res.status(200).json({ ok: true, mail: transport() ? 'configured' : 'not_configured' });
+  if (req.method !== 'POST') return res.status(405).setHeader('Allow', 'GET, POST').json({ error: 'method' });
 
   const origin = req.headers.origin || req.headers.referer || '';
   let host = '';
   try { host = origin ? new URL(origin).host : ''; } catch { host = ''; }
-  if (host && !ALLOWED_HOSTS.some((re) => re.test(host))) return res.status(403).json({ error: 'origin' });
+  // The site's own domain is always allowed, so a new custom domain works without editing this list.
+  const ownHost = req.headers['x-forwarded-host'] || req.headers.host;
+  if (host && host !== ownHost && !ALLOWED_HOSTS.some((re) => re.test(host))) return res.status(403).json({ error: 'origin' });
 
   const body = req.body && typeof req.body === 'object' ? req.body : (() => { try { return JSON.parse(req.body || '{}'); } catch { return {}; } })();
 
