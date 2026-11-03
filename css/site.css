@@ -512,3 +512,34 @@ p { margin: 0 0 1em; }
 .quote__done p { color: var(--muted); max-width: 56ch; margin: 0 auto 22px; }
 .btn:disabled { opacity: .7; cursor: progress; }
 .footer__ids a { color: #a9b9cd; }
+
+/* FAQ (home and route pages) */
+.faq { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 24px clamp(32px, 5vw, 72px); align-items: start; }
+.faq__head h2 { margin-bottom: 14px; }
+.faq__head p { color: var(--muted); max-width: 40ch; }
+.faq__item { border-bottom: 1px solid var(--line); }
+.faq__item:first-child { border-top: 1px solid var(--line); }
+.faq__item summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; font-weight: 650; font-size: 1.06rem; line-height: 1.35; color: var(--navy); }
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--blue); }
+.faq__item summary svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--blue); transition: transform .2s; }
+.faq__item[open] summary svg { transform: rotate(45deg); }
+.faq__item p { margin: -4px 0 22px; color: var(--muted); max-width: 68ch; }
+@media (max-width: 860px) { .faq { grid-template-columns: 1fr; } }
+
+/* Route pages */
+.route-dirs { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+.route-dirs h2 { font-size: clamp(1.35rem, 2.2vw, 1.7rem); margin-bottom: 12px; }
+.route-dirs .panel { display: flex; flex-direction: column; }
+.route-dirs .panel > p { color: var(--muted); }
+.route-dirs .btn { margin-top: auto; align-self: flex-start; }
+@media (max-width: 860px) { .route-dirs { grid-template-columns: 1fr; } }
+.checklist--cols { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px 32px; }
+.route-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.route-links a { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--navy); font-weight: 600; text-decoration: none; }
+.route-links a:hover { border-color: var(--blue); color: var(--blue); }
+.route-links svg { width: 18px; height: 18px; color: var(--blue); flex-shrink: 0; }
+.route-item h3 a { color: inherit; text-decoration: none; }
+.route-item h3 a:hover { color: var(--blue); text-decoration: underline; }
+.route-card__more { display: inline-block; margin-top: 14px; color: #c6d3e3; font-size: .92rem; }
+.route-card__more:hover { color: var(--white); }

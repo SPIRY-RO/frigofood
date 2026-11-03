@@ -12,7 +12,11 @@
   },
   "contact": {
     "company": "FRIGO FOOD DISTRIBUTION SRL",
-    "phones": ["+40 757 732 732", "+40 741 153 154", "+40 752 018 060"],
+    "phones": [
+      "+40 757 732 732",
+      "+40 741 153 154",
+      "+40 752 018 060"
+    ],
     "email": "office@frigofood.ro",
     "street": "Șos. Cernica nr. 278",
     "city": "Pantelimon",
@@ -26,7 +30,8 @@
     },
     "cui": "RO41776220",
     "euid": "ROONRC.J2019004582230",
-    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%C8%98oseaua%20Cernica%20278%2C%20Pantelimon%2C%20Ilfov"
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=%C8%98oseaua%20Cernica%20278%2C%20Pantelimon%2C%20Ilfov",
+    "founded": "2019"
   },
   "routes": {
     "hub": {
@@ -44,7 +49,13 @@
         "ro": "Polonia",
         "en": "Poland",
         "lon": 19.3,
-        "lat": 52.1
+        "lat": 52.1,
+        "cities": [
+          "Varșovia|Warsaw",
+          "Poznań",
+          "Łódź",
+          "Wrocław"
+        ]
       },
       {
         "code": "NL",
@@ -55,7 +66,13 @@
         "lat": 52.3,
         "dx": -11,
         "dy": -6,
-        "anchor": "end"
+        "anchor": "end",
+        "cities": [
+          "Rotterdam",
+          "Amsterdam",
+          "Venlo",
+          "Eindhoven"
+        ]
       },
       {
         "code": "BE",
@@ -66,7 +83,13 @@
         "lat": 50.7,
         "dx": -11,
         "dy": 12,
-        "anchor": "end"
+        "anchor": "end",
+        "cities": [
+          "Antwerpen|Antwerp",
+          "Bruxelles|Brussels",
+          "Gent|Ghent",
+          "Liège"
+        ]
       },
       {
         "code": "DE",
@@ -74,7 +97,13 @@
         "ro": "Germania",
         "en": "Germany",
         "lon": 10.3,
-        "lat": 51.0
+        "lat": 51,
+        "cities": [
+          "Hamburg",
+          "München|Munich",
+          "Frankfurt",
+          "Berlin"
+        ]
       },
       {
         "code": "ES",
@@ -82,7 +111,13 @@
         "ro": "Spania",
         "en": "Spain",
         "lon": -3.7,
-        "lat": 40.3
+        "lat": 40.3,
+        "cities": [
+          "Madrid",
+          "Barcelona",
+          "Valencia",
+          "Murcia"
+        ]
       },
       {
         "code": "FR",
@@ -90,7 +125,13 @@
         "ro": "Franța",
         "en": "France",
         "lon": 2.4,
-        "lat": 47.0
+        "lat": 47,
+        "cities": [
+          "Paris",
+          "Lyon",
+          "Marsilia|Marseille",
+          "Perpignan"
+        ]
       },
       {
         "code": "IT",
@@ -98,7 +139,13 @@
         "ro": "Italia",
         "en": "Italy",
         "lon": 10.9,
-        "lat": 44.6
+        "lat": 44.6,
+        "cities": [
+          "Milano|Milan",
+          "Verona",
+          "Bologna",
+          "Roma|Rome"
+        ]
       },
       {
         "code": "HU",
@@ -106,7 +153,13 @@
         "ro": "Ungaria",
         "en": "Hungary",
         "lon": 19.3,
-        "lat": 47.1
+        "lat": 47.1,
+        "cities": [
+          "Budapesta|Budapest",
+          "Szeged",
+          "Debrecen",
+          "Győr"
+        ]
       },
       {
         "code": "AT",
@@ -117,7 +170,13 @@
         "lat": 47.6,
         "dx": -11,
         "dy": 12,
-        "anchor": "end"
+        "anchor": "end",
+        "cities": [
+          "Viena|Vienna",
+          "Linz",
+          "Graz",
+          "Salzburg"
+        ]
       },
       {
         "code": "CZ",
@@ -128,7 +187,13 @@
         "lat": 49.8,
         "dx": 0,
         "dy": -12,
-        "anchor": "middle"
+        "anchor": "middle",
+        "cities": [
+          "Praga|Prague",
+          "Brno",
+          "Ostrava",
+          "Plzeň"
+        ]
       },
       {
         "code": "SK",
@@ -136,7 +201,13 @@
         "ro": "Slovacia",
         "en": "Slovakia",
         "lon": 19.4,
-        "lat": 48.8
+        "lat": 48.8,
+        "cities": [
+          "Bratislava",
+          "Košice",
+          "Žilina",
+          "Nitra"
+        ]
       },
       {
         "code": "DK",
@@ -144,15 +215,27 @@
         "ro": "Danemarca",
         "en": "Denmark",
         "lon": 9.2,
-        "lat": 56.1
+        "lat": 56.1,
+        "cities": [
+          "Copenhaga|Copenhagen",
+          "Aarhus",
+          "Odense",
+          "Esbjerg"
+        ]
       },
       {
         "code": "SE",
         "id": "752",
         "ro": "Suedia",
         "en": "Sweden",
-        "lon": 15.0,
-        "lat": 59.4
+        "lon": 15,
+        "lat": 59.4,
+        "cities": [
+          "Stockholm",
+          "Göteborg|Gothenburg",
+          "Malmö",
+          "Helsingborg"
+        ]
       },
       {
         "code": "BG",
@@ -160,7 +243,13 @@
         "ro": "Bulgaria",
         "en": "Bulgaria",
         "lon": 25.3,
-        "lat": 42.7
+        "lat": 42.7,
+        "cities": [
+          "Sofia",
+          "Plovdiv",
+          "Varna",
+          "Ruse"
+        ]
       },
       {
         "code": "UK",
@@ -171,8 +260,15 @@
         "lat": 52.6,
         "dx": -11,
         "anchor": "end",
-        "onRequest": true
+        "onRequest": true,
+        "cities": [
+          "Londra|London",
+          "Birmingham",
+          "Manchester",
+          "Leeds"
+        ]
       }
     ]
-  }
+  },
+  "indexNowKey": "a4d96bd9a3f826e130b9dfeb1e94addf"
 }

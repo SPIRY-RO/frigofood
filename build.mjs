@@ -20,6 +20,23 @@ const url = (page, lang) => {
 };
 const tr = (lang) => (ro, en) => (lang === 'en' ? en : ro);
 const tel = (phone) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+const bi = (ro, en) => `<span lang="ro">${ro}</span><span lang="en">${en}</span>`;
+const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const join = (items, lang, or = false) => (items.length < 2 ? items.join('')
+  : `${items.slice(0, -1).join(', ')} ${or ? (lang === 'en' ? 'or' : 'sau') : (lang === 'en' ? 'and' : 'și')} ${items.at(-1)}`);
+const theEn = (c) => (/^(Netherlands|United Kingdom)$/.test(c.en) ? `the ${c.en}` : c.en);
+const cities = (c, lang) => c.cities.map((x) => x.split('|')[lang === 'en' ? x.split('|').length - 1 : 0]);
+const FAQ = JSON.parse(readFileSync('data/faq.json', 'utf8'));
+
+// One page per route, generated from data/site.json and registered like the hand-written pages.
+const ROUTE_PAGES = {};
+for (const c of ROUTES.countries) {
+  const file = `transport-frigorific-${slug(c.ro)}-romania.html`;
+  PAGES[file] = `refrigerated-transport-${slug(c.en)}-romania.html`;
+  ROUTE_PAGES[file] = c;
+  c.file = file;
+}
+for (const c of ROUTES.countries) c.page = { ro: url(c.file, 'ro'), en: url(c.file, 'en') };
 const phoneLinks = (cls = '') => C.phones.map((p) => `<a${cls ? ` class="${cls}"` : ''} href="${tel(p)}">${p}</a>`).join('');
 
 /* ---------- Language stripping: drop every element marked with the other language ---------- */
@@ -81,7 +98,8 @@ const NAV = [
 
 function header(lang, page) {
   const t = tr(lang);
-  const links = NAV.map(([p, ro, en]) => `<li><a href="${url(p, lang)}"${p === page ? ' aria-current="page"' : ''}>${t(ro, en)}</a></li>`).join('');
+  const current = ROUTE_PAGES[page] ? 'rute.html' : page;
+  const links = NAV.map(([p, ro, en]) => `<li><a href="${url(p, lang)}"${p === current ? ' aria-current="page"' : ''}>${t(ro, en)}</a></li>`).join('');
   const switchTo = (l, label, name) =>
     `<a href="${url(page, l)}" hreflang="${l}" lang="${l}" data-lang-link${l === lang ? ' aria-current="true"' : ''} aria-label="${name}">${label}</a>`;
   return `
@@ -210,7 +228,7 @@ function routeList(lang) {
   const q = (from, to) => `${url('contact.html', lang)}?from=${from}&amp;to=${to}#oferta`;
   return `<div class="route-list">${ROUTES.countries.map((c) => `
     <article class="route-item">
-      <h3>${t(`Transport frigorific ${c.ro} ⇄ România`, `Refrigerated transport ${c.en} ⇄ Romania`)}</h3>
+      <h3><a href="${c.page[lang]}">${t(`Transport frigorific ${c.ro} ⇄ România`, `Refrigerated transport ${c.en} ⇄ Romania`)}</a></h3>
       <ul>
         <li>${icon('arrow-down-right')}${t('Import', 'Import')}: ${c[lang]} → ${H[lang]}</li>
         <li>${icon('arrow-up-right')}${t('Export', 'Export')}: ${H[lang]} → ${c[lang]}</li>
@@ -263,13 +281,203 @@ function headExtras(lang, page, title, desc, indexable) {
   <script src="/js/site.js?v=${V}" defer></script>`;
 }
 
+/* ---------- FAQ, structured data and route pages (for search engines and AI assistants) ---------- */
+
+const ld = (data, lang) => `<script type="application/ld+json"${lang ? ` lang="${lang}"` : ''}>${JSON.stringify(data)}</script>`;
+const ORG_ID = `${BASE}/#organization`;
+
+function fill(text, lang, c) {
+  const all = ROUTES.countries.map((x) => (lang === 'en' ? theEn(x) : x.ro));
+  return text
+    .replace(/\{countries\}/g, join(all, lang))
+    .replace(/\{availability\}/g, c ? FAQ.availability[c.onRequest ? 'onRequest' : 'standard'][lang] : '')
+    .replace(/\{cities\}/g, c ? join(cities(c, lang), lang, true) : '')
+    .replace(/\{countryIn\}/g, c ? theEn(c) : '')
+    .replace(/\{country\}/g, c ? c.ro : '');
+}
+
+// Visible questions and the matching FAQPage data come from the same text, as search engines require.
+function faqSection(items, c) {
+  const qa = (lang) => items.map((i) => ({ q: fill(i.q[lang], lang, c), a: fill(i.a[lang], lang, c) }));
+  const list = (lang) => qa(lang).map(({ q, a }) => `<details class="faq__item"><summary>${q}${icon('plus')}</summary><p>${a}</p></details>`).join('');
+  const data = (lang) => ({ '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: qa(lang).map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+  return `
+    <section class="section" id="intrebari">
+      <div class="wrap faq">
+        <div class="faq__head">
+          <h2>${bi('Întrebări frecvente', 'Frequently asked questions')}</h2>
+          <p>${bi(`Nu găsești răspunsul? Scrie-ne la <a href="mailto:${C.email}">${C.email}</a> sau sună la ${C.phones[0]}.`,
+                  `Can't find your answer? Email <a href="mailto:${C.email}">${C.email}</a> or call ${C.phones[0]}.`)}</p>
+        </div>
+        <div class="faq__list"><div lang="ro">${list('ro')}</div><div lang="en">${list('en')}</div></div>
+      </div>
+    </section>
+    ${ld(data('ro'), 'ro')}${ld(data('en'), 'en')}`;
+}
+
+function orgData(lang) {
+  const t = tr(lang);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: 'Frigo Food Distribution',
+    legalName: C.company,
+    alternateName: 'Frigo Food',
+    url: `${BASE}${url('index.html', lang)}`,
+    logo: `${BASE}/brand/logo/ffd-logo-horizontal.png`,
+    image: `${BASE}/brand/social/og-image.png`,
+    description: t('Casă de expediții din Pantelimon, Ilfov, care organizează transport rutier internațional cu temperatură controlată (FTL și grupaj) pentru produse alimentare refrigerate și congelate, între România și Europa, prin transportatori parteneri.',
+                   'Freight forwarder in Pantelimon, Ilfov, Romania, organising international temperature-controlled road transport (FTL and groupage) for chilled and frozen food between Romania and Europe, through partner carriers.'),
+    foundingDate: C.founded,
+    vatID: C.cui,
+    identifier: C.euid,
+    email: C.email,
+    telephone: C.phones.map((p) => p.replace(/\s/g, '')),
+    address: { '@type': 'PostalAddress', streetAddress: 'Șoseaua Cernica nr. 278', addressLocality: C.city, addressRegion: 'Ilfov', addressCountry: 'RO' },
+    contactPoint: C.phones.map((p) => ({ '@type': 'ContactPoint', contactType: 'sales', telephone: p.replace(/\s/g, ''), email: C.email, availableLanguage: ['ro', 'en'] })),
+    areaServed: [ROUTES.hub, ...ROUTES.countries].map((x) => ({ '@type': 'Country', name: x.en })),
+    knowsAbout: ['refrigerated transport', 'temperature-controlled road freight', 'FTL', 'refrigerated groupage', 'food logistics', 'transport frigorific', 'grupaj frigorific'],
+    makesOffer: [['transport-ftl.html', t('Transport frigorific FTL', 'Refrigerated FTL transport')], ['grupaj-frigorific.html', t('Grupaj frigorific', 'Refrigerated groupage')]]
+      .map(([p, name]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name, url: `${BASE}${url(p, lang)}` } })),
+  };
+}
+
+function routeSource(c) {
+  const H = ROUTES.hub;
+  const q = (from, to) => `contact.html?from=${from}&amp;to=${to}#oferta`;
+  const cRo = join(cities(c, 'ro'), 'ro', true);
+  const cEn = join(cities(c, 'en'), 'en', true);
+  const modes = c.onRequest
+    ? bi('Rută organizată la cerere, după verificarea posibilității și a condițiilor', 'Route organised on request, once feasibility and terms are checked')
+    : bi('Camion complet (FTL), dedicat încărcăturii tale; grupaj la cerere', 'Full truck load (FTL) dedicated to your load; groupage on request');
+  const checklist = `
+          <ul class="checklist">
+            <li>${icon('truck')}${modes}</li>
+            <li>${icon('thermometer-snowflake')}${bi('Regim refrigerat sau congelat, la temperatura stabilită pentru marfă', 'Chilled or frozen, at the temperature agreed for the goods')}</li>
+            <li>${icon('calendar-clock')}${bi('Planificare după sloturile de încărcare și descărcare', 'Planned around loading and unloading slots')}</li>
+            <li>${icon('shield-check')}${bi('Transportatori parteneri verificați înainte de atribuirea comenzii', 'Partner carriers checked before the order is assigned')}</li>
+          </ul>`;
+  const graph = (lang) => {
+    const t = tr(lang);
+    const name = t(`Transport frigorific ${c.ro} ⇄ România`, `Refrigerated transport ${c.en} ⇄ Romania`);
+    return { '@context': 'https://schema.org', '@graph': [
+      { '@type': 'Service', name, serviceType: t('Transport rutier frigorific internațional', 'International refrigerated road transport'),
+        description: t(`Import și export de produse alimentare refrigerate și congelate între ${c.ro} și România.`, `Imports and exports of chilled and frozen food between ${theEn(c)} and Romania.`),
+        provider: { '@id': ORG_ID, '@type': 'Organization', name: 'Frigo Food Distribution' },
+        areaServed: [{ '@type': 'Country', name: c.en }, { '@type': 'Country', name: 'Romania' }],
+        url: `${BASE}${c.page[lang]}` },
+      { '@type': 'BreadcrumbList', itemListElement: [
+        [t('Acasă', 'Home'), url('index.html', lang)], [t('Rute', 'Routes'), url('rute.html', lang)], [name, c.page[lang]],
+      ].map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: `${BASE}${u}` })) },
+    ] };
+  };
+  const others = ROUTES.countries.filter((x) => x !== c)
+    .map((x) => `<li><a href="${x.file}">${bi(`${x.ro} ⇄ România`, `${x.en} ⇄ Romania`)}${icon('arrow-right')}</a></li>`).join('');
+  return `<!doctype html>
+<html lang="ro" data-title-en="Refrigerated transport ${c.en} ⇄ Romania, import and export | Frigo Food Distribution" data-desc-en="Refrigerated road transport between ${theEn(c)} and Romania for chilled and frozen food: imports and exports, ${c.onRequest ? 'on request' : 'FTL, with groupage on request'}, through partner carriers. Request a quote.">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transport frigorific ${c.ro} ⇄ România, import și export | Frigo Food Distribution</title>
+  <meta name="description" content="Transport frigorific între ${c.ro} și România pentru produse alimentare refrigerate și congelate: import și export, ${c.onRequest ? 'la cerere' : 'FTL, cu grupaj la cerere'}, prin transportatori parteneri. Cere o ofertă.">
+  <!--ff:head-->
+  <link rel="stylesheet" href="/css/site.css">
+  ${ld(graph('ro'), 'ro')}${ld(graph('en'), 'en')}
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="crumbs"><a href="index.html">${bi('Acasă', 'Home')}</a> / <a href="rute.html">${bi('Rute', 'Routes')}</a> / ${bi(c.ro, c.en)}</p>
+        <h1>${bi(`Transport frigorific ${c.ro} ⇄ România`, `Refrigerated transport ${c.en} ⇄ Romania`)}</h1>
+        <p class="lead">${bi(`Organizăm transport rutier cu temperatură controlată între ${c.ro} și România, în ambele sensuri, pentru produse alimentare refrigerate și congelate. Lucrăm cu transportatori parteneri, iar disponibilitatea se confirmă pentru fiecare dată și tip de marfă.`,
+                              `We organise temperature-controlled road transport between ${theEn(c)} and Romania, in both directions, for chilled and frozen food. We work with partner carriers, and availability is confirmed for each date and type of goods.`)}</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="${q(c.code, H.code)}">${bi(`Ofertă import ${c.ro} → România`, `Import quote ${c.en} → Romania`)}</a>
+          <a class="btn btn--ghost" href="${q(H.code, c.code)}">${bi(`Ofertă export România → ${c.ro}`, `Export quote Romania → ${c.en}`)}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap route-dirs">
+        <article class="panel">
+          <h2>${bi(`Import: ${c.ro} → România`, `Import: ${c.en} → Romania`)}</h2>
+          <p>${bi(`Pentru importatori și distribuitori care aduc marfă din ${c.ro}: încărcare la furnizor, de exemplu în zona ${cRo}, și livrare la depozitul sau clientul tău din România.`,
+                  `For importers and distributors bringing goods from ${theEn(c)}: loading at the supplier, for example around ${cEn}, and delivery to your warehouse or customer in Romania.`)}</p>
+          ${checklist}
+          <a class="btn btn--primary" href="${q(c.code, H.code)}">${bi('Solicită ofertă de import', 'Request an import quote')}</a>
+        </article>
+        <article class="panel">
+          <h2>${bi(`Export: România → ${c.ro}`, `Export: Romania → ${c.en}`)}</h2>
+          <p>${bi(`Pentru producători și exportatori din România care livrează în ${c.ro}: încărcare la adresa ta din România și livrare la clientul tău, de exemplu în zona ${cRo}.`,
+                  `For Romanian producers and exporters delivering to ${theEn(c)}: loading at your address in Romania and delivery to your customer, for example around ${cEn}.`)}</p>
+          ${checklist}
+          <a class="btn btn--primary" href="${q(H.code, c.code)}">${bi('Solicită ofertă de export', 'Request an export quote')}</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--navy">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>${bi(`Ruta ${c.ro} ⇄ România pe hartă`, `The ${c.en} ⇄ Romania route on the map`)}</h2>
+          <p>${bi('Alege sensul transportului sau altă țară pentru a compara rutele.', 'Pick the direction or another country to compare routes.')}</p>
+        </div>
+        <div data-route-board="${c.code}"></div>
+      </div>
+    </section>
+
+    <section class="section section--ice">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>${bi(`Ce transportăm pe ruta ${c.ro} ⇄ România`, `What we move between ${theEn(c)} and Romania`)}</h2>
+          <p>${bi('Temperatura și condițiile de transport se stabilesc pentru fiecare încărcătură, în funcție de specificațiile produsului.', 'The temperature and transport conditions are set for each load, according to the product specifications.')}</p>
+        </div>
+        <ul class="checklist checklist--cols">
+          <li>${icon('check')}${bi('Carne și produse din carne, proaspete sau congelate', 'Meat and meat products, fresh or frozen')}</li>
+          <li>${icon('check')}${bi('Pește și fructe de mare', 'Fish and seafood')}</li>
+          <li>${icon('check')}${bi('Fructe și legume', 'Fruit and vegetables')}</li>
+          <li>${icon('check')}${bi('Lactate și produse refrigerate', 'Dairy and chilled products')}</li>
+          <li>${icon('check')}${bi('Cartofi și produse de panificație congelate', 'Frozen potato and bakery products')}</li>
+          <li>${icon('check')}${bi('Alte produse alimentare cu temperatură controlată', 'Other temperature-controlled food')}</li>
+        </ul>
+      </div>
+    </section>
+
+    ${faqSection(FAQ.route, c)}
+
+    <section class="section section--ice">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>${bi('Alte rute de transport frigorific', 'Other refrigerated transport routes')}</h2>
+        </div>
+        <ul class="route-links">${others}</ul>
+      </div>
+    </section>
+
+    <!--ff:cta-->
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>
+`;
+}
+
 /* ---------- Pages ---------- */
 
 const attr = (html, name) => (html.match(new RegExp(`\\s${name}="([^"]*)"`)) || [])[1];
 
 function buildPage(page, lang) {
   // Phone placeholders go first: they may sit inside the title, description or JSON-LD.
-  let html = readFileSync(page, 'utf8')
+  let html = (ROUTE_PAGES[page] ? routeSource(ROUTE_PAGES[page]) : readFileSync(page, 'utf8'))
+    .replace('<!--ff:faq-->', () => faqSection(FAQ.general))
+    .replace('<!--ff:org-->', () => ld(orgData('ro'), 'ro') + ld(orgData('en'), 'en'))
     .replace(/<!--ff:phones-->/g, phoneLinks())
     .replace(/<!--ff:phones-text-->/g, C.phones.join(', '))
     .replace(/"<!--ff:phones-json-->"/g, JSON.stringify(C.phones.map((p) => p.replace(/\s/g, ''))));
@@ -296,7 +504,8 @@ function buildPage(page, lang) {
     .replace(/<!--ff:cta-->/g, cta(lang))
     .replace('<div class="route-list" data-route-list></div>', routeList(lang))
     .replace('href="/css/site.css"', `href="/css/site.css?v=${V}"`)
-    .replace(/href="\/?([a-z0-9-]+\.html)([?#][^"]*)?"/g, (m, p, rest = '') => (PAGES[p] ? `href="${url(p, lang)}${rest}"` : m));
+    // Only bare source links (href="contact.html"); the header's language switch already holds final /... URLs.
+    .replace(/href="([a-z0-9-]+\.html)([?#][^"]*)?"/g, (m, p, rest = '') => (PAGES[p] ? `href="${url(p, lang)}${rest}"` : m));
   return inlineIcons(html);
 }
 
@@ -338,7 +547,7 @@ writeFileSync(`${OUT}/site.webmanifest`, JSON.stringify({
 }));
 
 for (const page of Object.keys(PAGES)) {
-  if (!existsSync(page)) throw new Error(`Missing source page ${page}`);
+  if (!ROUTE_PAGES[page] && !existsSync(page)) throw new Error(`Missing source page ${page}`);
   for (const lang of LANGS) {
     writeFileSync(lang === 'en' ? `${OUT}/en/${PAGES[page]}` : `${OUT}/${page}`, buildPage(page, lang));
   }
@@ -354,5 +563,49 @@ writeFileSync(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>
 ${listed.flatMap((p) => LANGS.map((l) => `  <url><loc>${BASE}${url(p, l)}</loc>${LANGS.map((a) => `<xhtml:link rel="alternate" hreflang="${a}" href="${BASE}${url(p, a)}"/>`).join('')}</url>`)).join('\n')}
 </urlset>
 `);
-writeFileSync(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /brand/\n\nSitemap: ${BASE}/sitemap.xml\n`);
+// AI search and assistant crawlers are named explicitly: a bot that matches its own group ignores the * group.
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User',
+  'Google-Extended', 'Applebot-Extended', 'Bingbot', 'DuckAssistBot', 'meta-externalagent', 'MistralAI-User', 'CCBot'];
+writeFileSync(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /brand/\n\n${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}\nAllow: /\nDisallow: /brand/\n\nSitemap: ${BASE}/sitemap.xml\n`);
+
+// llms.txt: a plain summary of the company and every page, for AI assistants (https://llmstxt.org).
+const link = (p, lang, title) => `- [${title}](${BASE}${url(p, lang)})`;
+const faqText = (lang) => FAQ.general.map((i) => `**${fill(i.q[lang], lang)}**\n${fill(i.a[lang], lang)}`).join('\n\n');
+writeFileSync(`${OUT}/llms.txt`, `# Frigo Food Distribution
+
+> ${orgData('en').description}
+
+- Legal name: ${C.company}, VAT ID ${C.cui}, EUID ${C.euid}, registered in ${C.founded}
+- Address: ${C.street}, ${C.city}, ${C.county.en}, Romania
+- Phone: ${C.phones.join(', ')}
+- Email: ${C.email}
+- Services: refrigerated FTL transport (a dedicated trailer, up to 33 EUR pallets) and refrigerated groupage (on request), chilled or frozen, for the food industry
+- Routes: Romania to and from ${join(ROUTES.countries.map((c) => theEn(c) + (c.onRequest ? ' (on request)' : '')), 'en')}; imports and exports
+- Goods: meat, fish and seafood, fruit and vegetables, dairy, frozen potato and bakery products, other temperature-controlled food
+- How it works: a freight forwarder, not a carrier. Transport runs with vetted partner carriers; availability is confirmed for each route, date and type of goods. Transit times and temperatures are agreed per shipment, not published.
+- Quotes: ${BASE}${url('contact.html', 'en')}#oferta (form), or email and phone above. Languages: Romanian and English.
+
+## Pages (English)
+${link('index.html', 'en', 'Home')}
+${link('transport-ftl.html', 'en', 'Refrigerated FTL transport')}
+${link('grupaj-frigorific.html', 'en', 'Refrigerated groupage')}
+${link('rute.html', 'en', 'All routes')}
+${link('despre-noi.html', 'en', 'About us')}
+${link('contact.html', 'en', 'Contact and quote request')}
+
+## Routes (English)
+${ROUTES.countries.map((c) => link(c.file, 'en', `Refrigerated transport ${c.en} ⇄ Romania`)).join('\n')}
+
+## Pagini în limba română
+${link('index.html', 'ro', 'Acasă')}
+${link('transport-ftl.html', 'ro', 'Transport frigorific FTL')}
+${link('grupaj-frigorific.html', 'ro', 'Grupaj frigorific')}
+${link('rute.html', 'ro', 'Rute')}
+${link('contact.html', 'ro', 'Contact și cerere de ofertă')}
+${ROUTES.countries.map((c) => link(c.file, 'ro', `Transport frigorific ${c.ro} ⇄ România`)).join('\n')}
+
+## FAQ
+${faqText('en')}
+`);
+writeFileSync(`${OUT}/${SITE.indexNowKey}.txt`, SITE.indexNowKey);
 console.log(`Built ${listed.length + 1} pages x ${LANGS.length} languages into ${OUT}/`);

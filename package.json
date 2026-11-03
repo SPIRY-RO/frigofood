@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "check": "node scripts/quote-check.mjs"
+    "check": "node scripts/quote-check.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "engines": {
     "node": "24.x"

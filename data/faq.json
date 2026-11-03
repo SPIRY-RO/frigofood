@@ -1,0 +1,101 @@
+{
+  "_note": "Questions shown on the home page (general) and on every route page (route). Each answer is also published as FAQPage structured data, so keep it identical to what the page says and never promise transit times, fixed temperatures or tracking. Tokens filled by build.mjs: {countries}, {country}, {countryIn}, {availability}, {cities}.",
+  "general": [
+    {
+      "q": { "ro": "Ce este Frigo Food Distribution?", "en": "What is Frigo Food Distribution?" },
+      "a": {
+        "ro": "FRIGO FOOD DISTRIBUTION SRL este o casă de expediții din Pantelimon, județul Ilfov, România. Organizăm transporturi rutiere internaționale cu temperatură controlată pentru industria alimentară, în regim de camion complet (FTL) și grupaj, prin transportatori parteneri verificați.",
+        "en": "FRIGO FOOD DISTRIBUTION SRL is a freight forwarder based in Pantelimon, Ilfov County, Romania. We organise international temperature-controlled road transport for the food industry, as full truck loads (FTL) and groupage, through vetted partner carriers."
+      }
+    },
+    {
+      "q": { "ro": "Între ce țări organizați transport frigorific?", "en": "Which countries do you cover?" },
+      "a": {
+        "ro": "Organizăm transport frigorific între România și {countries}, atât pentru import în România, cât și pentru export din România. Disponibilitatea se confirmă pentru fiecare rută, dată și tip de marfă.",
+        "en": "We organise refrigerated transport between Romania and {countries}, both for imports into Romania and exports from Romania. Availability is confirmed for each route, date and type of goods."
+      }
+    },
+    {
+      "q": { "ro": "Care este diferența dintre FTL și grupaj frigorific?", "en": "What is the difference between FTL and refrigerated groupage?" },
+      "a": {
+        "ro": "La FTL (camion complet), semiremorca frigorifică este dedicată unei singure încărcături, de până la 33 de paleți EUR. La grupaj, marfa ta împarte camionul cu alte încărcături compatibile ca temperatură și tip de produs, ceea ce se potrivește cantităților mai mici. Grupajul se verifică la cerere, pentru fiecare transport.",
+        "en": "With FTL (full truck load), the refrigerated trailer is dedicated to a single load of up to 33 EUR pallets. With groupage, your goods share the truck with other loads that are compatible in temperature and product type, which suits smaller quantities. Groupage is checked on request for each shipment."
+      }
+    },
+    {
+      "q": { "ro": "Ce produse transportați?", "en": "What goods do you transport?" },
+      "a": {
+        "ro": "Produse alimentare refrigerate și congelate: carne și produse din carne, pește și fructe de mare, fructe și legume, lactate, cartofi și produse de panificație congelate, precum și alte alimente cu temperatură controlată.",
+        "en": "Chilled and frozen food: meat and meat products, fish and seafood, fruit and vegetables, dairy, frozen potato and bakery products, and other temperature-controlled food."
+      }
+    },
+    {
+      "q": { "ro": "La ce temperatură se face transportul?", "en": "At what temperature are the goods transported?" },
+      "a": {
+        "ro": "Temperatura se stabilește pentru fiecare transport, în funcție de specificațiile produsului, în regim refrigerat sau congelat. Ne comunici temperatura solicitată în cererea de ofertă, iar noi o transmitem transportatorului.",
+        "en": "The temperature is set for each shipment according to the product specifications, chilled or frozen. You state the required temperature in your quote request and we pass it on to the carrier."
+      }
+    },
+    {
+      "q": { "ro": "Sunteți transportator sau casă de expediții?", "en": "Are you a carrier or a freight forwarder?" },
+      "a": {
+        "ro": "Suntem casă de expediții. Organizăm transportul de la cerere până la livrare și lucrăm cu transportatori parteneri, ale căror documente și condiții le verificăm înainte de atribuirea comenzii.",
+        "en": "We are a freight forwarder. We organise the transport from request to delivery and work with partner carriers whose documents and terms we check before assigning the order."
+      }
+    },
+    {
+      "q": { "ro": "Cum obțin o ofertă de transport frigorific?", "en": "How do I get a quote?" },
+      "a": {
+        "ro": "Completezi formularul de ofertă de pe site, ne scrii la office@frigofood.ro sau ne suni. Avem nevoie de țara și localitatea de încărcare și descărcare, data estimată a încărcării, tipul mărfii și temperatura solicitată, numărul paleților și greutatea totală.",
+        "en": "Fill in the quote form on the site, email office@frigofood.ro or call us. We need the loading and delivery country and town, the estimated loading date, the type of goods and required temperature, the number of pallets and the total weight."
+      }
+    },
+    {
+      "q": { "ro": "Cât durează un transport frigorific internațional?", "en": "How long does an international refrigerated transport take?" },
+      "a": {
+        "ro": "Durata depinde de distanță, de programările de încărcare și descărcare și de timpii legali de condus și odihnă ai șoferilor. Estimarea pentru ruta ta este inclusă în ofertă.",
+        "en": "It depends on the distance, the loading and unloading appointments and the drivers' legal driving and rest times. The estimate for your route is included in the quote."
+      }
+    }
+  ],
+  "route": [
+    {
+      "q": { "ro": "Organizați transport frigorific din {country} în România?", "en": "Do you organise refrigerated transport from {countryIn} to Romania?" },
+      "a": {
+        "ro": "Da. Organizăm import de produse alimentare refrigerate și congelate din {country} în România, prin transportatori parteneri. {availability}",
+        "en": "Yes. We organise imports of chilled and frozen food from {countryIn} to Romania through partner carriers. {availability}"
+      }
+    },
+    {
+      "q": { "ro": "Faceți și export din România în {country}?", "en": "Do you also handle exports from Romania to {countryIn}?" },
+      "a": {
+        "ro": "Da, ruta funcționează în ambele sensuri. Pentru export din România în {country} folosești același formular de ofertă, cu țara de încărcare România.",
+        "en": "Yes, the route works in both directions. For exports from Romania to {countryIn} use the same quote form, with Romania as the loading country."
+      }
+    },
+    {
+      "q": { "ro": "Din ce localități din {country} se poate încărca?", "en": "Where in {countryIn} can goods be loaded?" },
+      "a": {
+        "ro": "Încărcarea și descărcarea se planifică la adresa indicată de tine, de exemplu în zona {cities}. Indică localitatea și codul poștal în cerere, iar noi confirmăm disponibilitatea.",
+        "en": "Loading and delivery are planned at the address you give us, for example around {cities}. Give the town and postcode in your request and we confirm availability."
+      }
+    },
+    {
+      "q": { "ro": "Cât durează transportul între {country} și România?", "en": "How long does transport between {countryIn} and Romania take?" },
+      "a": {
+        "ro": "Durata depinde de localitățile exacte, de programările de încărcare și descărcare și de timpii legali de condus și odihnă. O estimăm în oferta pentru ruta ta.",
+        "en": "It depends on the exact towns, the loading and unloading appointments and the legal driving and rest times. We estimate it in the quote for your route."
+      }
+    }
+  ],
+  "availability": {
+    "standard": {
+      "ro": "Lucrăm în regim de camion complet (FTL), iar grupajul se verifică la cerere. Disponibilitatea se confirmă pentru fiecare dată și tip de marfă.",
+      "en": "We work with full truck loads (FTL), and groupage is checked on request. Availability is confirmed for each date and type of goods."
+    },
+    "onRequest": {
+      "ro": "Această rută se organizează la cerere: ne transmiți detaliile, iar noi verificăm posibilitatea și condițiile transportului.",
+      "en": "This route is organised on request: send us the details and we check whether the transport is possible and on what terms."
+    }
+  }
+}

@@ -25,6 +25,15 @@ npm run build
 python3 -m http.server 8800 -d public
 ```
 
+## Search engines and AI assistants
+
+- **Route pages** are generated, one per country and language, from `data/site.json` → `routes.countries` (e.g. `/transport-frigorific-spania-romania.html`, `/en/refrigerated-transport-spain-romania.html`). Adding a country to the list adds its pages, sitemap entries and links. `cities` are the example loading areas shown on the page (`ro|en` when the names differ).
+- **FAQ** text lives in `data/faq.json` (home page and route pages). The build publishes the same text as `FAQPage` structured data, so never promise transit times, fixed temperatures or tracking there.
+- **Structured data:** Organization (home), Service and BreadcrumbList (route pages), FAQPage, all generated in `build.mjs`.
+- **`/llms.txt`** is a plain summary of the company and every page for AI assistants; `/robots.txt` names the AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and others) as allowed.
+- **IndexNow:** after a production deploy run `npm run indexnow`. It tells Bing (used by ChatGPT search), Yandex and others that the pages changed. The key lives in `data/site.json` → `indexNowKey` and is published at `/<key>.txt`.
+- Register the site in Google Search Console and Bing Webmaster Tools and submit `/sitemap.xml` (needs the owner's account).
+
 ## Common edits
 
 - **Routes:** `data/site.json` → `routes.countries`. Each country needs its ISO numeric `id` (for the map) and map coordinates. `onRequest: true` shows "La cerere".

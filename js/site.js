@@ -156,7 +156,8 @@ function renderRouteBoard(root) {
         <button type="button" data-dir="import" aria-pressed="${direction === 'import'}">${t('Spre România', 'To Romania')}</button>
         <button type="button" data-dir="export" aria-pressed="${direction === 'export'}">${t('Din România', 'From Romania')}</button>
       </div>
-      <a class="btn btn--light" href="${quoteHref(from, to)}">${t('Solicită ofertă pentru această rută', 'Request a quote for this route')}</a>`;
+      <a class="btn btn--light" href="${quoteHref(from, to)}">${t('Solicită ofertă pentru această rută', 'Request a quote for this route')}</a>
+      ${c.page && location.pathname !== c.page[LANG] ? `<a class="route-card__more" href="${c.page[LANG]}">${t('Detalii despre rută', 'Route details')}</a>` : ''}`;
   };
 
   const select = (code) => {
