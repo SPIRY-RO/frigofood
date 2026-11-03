@@ -4,8 +4,8 @@ const CONTACT = {
   phone: '+40 757 732 732',
   phoneHref: 'tel:+40757732732',
   email: 'office@frigofood.ro',
-  address: 'Șos. Cernica nr. 96, Pantelimon, jud. Ilfov, România',
-  mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Șoseaua Cernica 96, Pantelimon, Ilfov'),
+  address: 'Șos. Cernica nr. 278, Pantelimon, jud. Ilfov, România',
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Șoseaua Cernica 278, Pantelimon, Ilfov'),
 };
 
 const t = (ro, en) => `<span lang="ro">${ro}</span><span lang="en">${en}</span>`;
@@ -137,94 +137,173 @@ function renderFooter() {
     </div>`;
 }
 
-/* ---------- Route board ---------- */
+/* ---------- Route board: real map of Europe, lanes of the selected country ---------- */
 
+// lon/lat anchors sit on each country's main freight area. dx/dy/anchor place the label.
 const HUBS = {
-  UK: { ro: 'Marea Britanie', en: 'United Kingdom', lat: 51.5, lon: -0.6 },
-  NL: { ro: 'Olanda', en: 'Netherlands', lat: 52.2, lon: 5.3 },
-  BE: { ro: 'Belgia', en: 'Belgium', lat: 50.6, lon: 4.5 },
-  DE: { ro: 'Germania', en: 'Germany', lat: 51.0, lon: 10.4 },
-  PL: { ro: 'Polonia', en: 'Poland', lat: 52.1, lon: 19.4 },
-  HU: { ro: 'Ungaria', en: 'Hungary', lat: 47.2, lon: 19.4 },
-  RO: { ro: 'România', en: 'Romania', lat: 45.9, lon: 25.0 },
-  BG: { ro: 'Bulgaria', en: 'Bulgaria', lat: 42.7, lon: 25.4 },
+  UK: { id: '826', ro: 'Marea Britanie', en: 'United Kingdom', lon: -1.5, lat: 52.6, dx: -11, dy: 4, anchor: 'end' },
+  ES: { id: '724', ro: 'Spania', en: 'Spain', lon: -3.7, lat: 40.3 },
+  NL: { id: '528', ro: 'Olanda', en: 'Netherlands', lon: 5.5, lat: 52.3, dx: -9, dy: -8, anchor: 'end' },
+  BE: { id: '056', ro: 'Belgia', en: 'Belgium', lon: 4.6, lat: 50.7, dx: -11, dy: 12, anchor: 'end' },
+  DE: { id: '276', ro: 'Germania', en: 'Germany', lon: 10.3, lat: 51.0, dx: 0, dy: 22, anchor: 'middle' },
+  DK: { id: '208', ro: 'Danemarca', en: 'Denmark', lon: 9.2, lat: 56.1, dx: -11, dy: 4, anchor: 'end' },
+  SE: { id: '752', ro: 'Suedia', en: 'Sweden', lon: 15.0, lat: 59.4 },
+  AT: { id: '040', ro: 'Austria', en: 'Austria', lon: 14.4, lat: 47.6, dx: -11, dy: 12, anchor: 'end' },
+  CZ: { id: '203', ro: 'Cehia', en: 'Czechia', lon: 15.4, lat: 49.8, dx: 0, dy: -12, anchor: 'middle' },
+  SK: { id: '703', ro: 'Slovacia', en: 'Slovakia', lon: 19.4, lat: 48.8, dy: -6 },
+  HU: { id: '348', ro: 'Ungaria', en: 'Hungary', lon: 19.3, lat: 47.1, dy: 10 },
+  PL: { id: '616', ro: 'Polonia', en: 'Poland', lon: 19.3, lat: 52.1 },
+  RO: { id: '642', ro: 'România', en: 'Romania', lon: 24.9, lat: 45.9 },
+  BG: { id: '100', ro: 'Bulgaria', en: 'Bulgaria', lon: 25.3, lat: 42.7 },
 };
-const WEST = ['UK', 'NL', 'BE', 'DE'];
-const EAST = ['PL', 'HU', 'RO', 'BG'];
+const WEST = ['UK', 'ES', 'NL', 'BE', 'DE', 'DK', 'SE'];
+const EAST = ['AT', 'CZ', 'SK', 'HU', 'PL', 'RO', 'BG'];
 // Keep this list to the lanes actually operated. groupage: 'request' = availability confirmed per request.
 const LANES = WEST.flatMap((a) => EAST.map((b) => ({ a, b, ftl: true, groupage: 'request' })));
 
-const project = ({ lat, lon }) => ({ x: Math.round((lon + 3) * 23.6 + 20), y: Math.round((55 - lat) * 36) });
+const MAP_W = 760;
+const MAP_H = 600;
+let mapLibs;
+const loadMapLibs = () => (mapLibs ??= Promise.all([
+  import('https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/+esm'),
+  import('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'),
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json').then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+]));
+
+async function drawMap(svg) {
+  const [geo, topo, world] = await loadMapLibs();
+  const projection = geo.geoConicConformal().rotate([-12, 0]).parallels([40, 58])
+    .fitExtent([[28, 28], [MAP_W - 28, MAP_H - 28]], { type: 'MultiPoint', coordinates: [[-9.5, 36.5], [29, 36.5], [-8, 60.5], [27, 60.5]] });
+  projection.clipExtent([[0, 0], [MAP_W, MAP_H]]);
+  const path = geo.geoPath(projection);
+  const hubById = Object.fromEntries(Object.entries(HUBS).map(([k, h]) => [h.id, k]));
+  const land = topo.feature(world, world.objects.countries).features
+    .filter((f) => { const [lon, lat] = geo.geoCentroid(f); return f.id === '643' || (lon > -25 && lon < 50 && lat > 30 && lat < 75); })
+    .map((f) => {
+      const d = path(f);
+      if (!d) return '';
+      const hub = hubById[f.id];
+      return `<path class="country${hub ? ' country--served' : ''}"${hub ? ` data-hub="${hub}"` : ''} d="${d}"/>`;
+    }).join('');
+  const hubs = Object.entries(HUBS).map(([k, h]) => {
+    const [x, y] = projection([h.lon, h.lat]);
+    h.x = x; h.y = y;
+    const tx = x + (h.dx ?? 11), ty = y + (h.dy ?? 4), anchor = h.anchor || 'start';
+    return `<g class="hub" data-hub="${k}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5"/>
+      <text lang="ro" x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}">${h.ro}</text>
+      <text lang="en" x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}">${h.en}</text></g>`;
+  }).join('');
+  svg.innerHTML = `<title>Hartă rute / Route map</title><g class="land">${land}</g><g class="arcs"></g><g class="hubs">${hubs}</g>`;
+}
+
+// Labels that would run past the map edge flip to the other side of their dot.
+function keepLabelsInside(svg) {
+  svg.querySelectorAll('.hub text').forEach((text) => {
+    const h = HUBS[text.parentNode.dataset.hub];
+    text.setAttribute('text-anchor', h.anchor || 'start');
+    text.setAttribute('x', (h.x + (h.dx ?? 11)).toFixed(1));
+    if (getComputedStyle(text).display === 'none') return;
+    const box = text.getBBox();
+    if (box.x + box.width > MAP_W - 6) { text.setAttribute('text-anchor', 'end'); text.setAttribute('x', (h.x - 11).toFixed(1)); }
+    else if (box.x < 6) { text.setAttribute('text-anchor', 'start'); text.setAttribute('x', (h.x + 11).toFixed(1)); }
+  });
+}
+
+function arcPath(p, q) {
+  const mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2;
+  const dx = q.x - p.x, dy = q.y - p.y, bend = 0.2;
+  const sign = dx >= 0 ? -1 : 1;
+  return `M${p.x.toFixed(1)},${p.y.toFixed(1)} Q${(mx + sign * dy * bend).toFixed(1)},${(my - sign * dx * bend).toFixed(1)} ${q.x.toFixed(1)},${q.y.toFixed(1)}`;
+}
 
 function renderRouteBoard(root) {
-  const pts = Object.fromEntries(Object.entries(HUBS).map(([k, h]) => [k, project(h)]));
-  const lines = LANES.map(({ a, b }) => {
-    const p = pts[a], q = pts[b];
-    const mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2 - Math.hypot(q.x - p.x, q.y - p.y) * 0.18;
-    return `<path class="lane-line" data-a="${a}" data-b="${b}" d="M${p.x},${p.y} Q${mx},${my} ${q.x},${q.y}"/>`;
-  }).join('');
-  const labelLeft = new Set(['UK', 'BE']);
-  const nodes = Object.entries(pts).map(([k, p]) => {
-    const left = labelLeft.has(k);
-    return `<g class="map-node" data-hub="${k}" tabindex="0" role="button">
-        <circle class="halo" cx="${p.x}" cy="${p.y}" r="14" fill="transparent"/>
-        <circle class="dot" cx="${p.x}" cy="${p.y}" r="6.5"/>
-        <text x="${p.x + (left ? -14 : 14)}" y="${p.y + 5}" text-anchor="${left ? 'end' : 'start'}">${k}</text>
-      </g>`;
-  }).join('');
-  const buttons = [...WEST, ...EAST].map((k) =>
+  const chips = (keys) => keys.map((k) =>
     `<button type="button" data-hub="${k}" aria-pressed="false" data-ro="${HUBS[k].ro}" data-en="${HUBS[k].en}">${HUBS[k].ro}</button>`).join('');
 
   root.innerHTML = `
     <div class="routes">
       <div class="routes__map">
-        <svg viewBox="20 64 720 420" role="img" aria-labelledby="map-title">
-          <title id="map-title">Rute între Europa de Vest și Europa Centrală și de Est / Lanes between Western and Central-Eastern Europe</title>
-          <defs>
-            <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.2" fill="#1e3d66"/></pattern>
-          </defs>
-          <rect x="20" y="64" width="720" height="420" fill="url(#grid)"/>
-          ${lines}${nodes}
-        </svg>
+        <svg viewBox="0 0 ${MAP_W} ${MAP_H}" aria-hidden="true"></svg>
+        <p class="routes__status">${t('Se încarcă harta...', 'Loading the map...')}</p>
         <div class="routes__legend">
-          <span><i></i>${t('Rute FTL', 'FTL lanes')}</span>
-          <span><i class="is-dashed"></i>${t('Grupaj: disponibilitate confirmată la cerere', 'Groupage: availability confirmed on request')}</span>
+          <span><i></i>${t('Rute FTL ale țării alese', 'FTL lanes of the selected country')}</span>
+          <span><i class="is-dashed"></i>${t('Grupaj: confirmat la cerere', 'Groupage: confirmed on request')}</span>
         </div>
       </div>
       <div class="routes__panel">
         <h3>${t('Alege țara de încărcare sau de livrare', 'Pick a loading or delivery country')}</h3>
-        <p>${t('Legăm Europa de Vest de Europa Centrală și de Est, în ambele sensuri.', 'We connect Western Europe with Central and Eastern Europe, in both directions.')}</p>
-        <div class="routes__pick">${buttons}</div>
-        <ul class="lanes" aria-live="polite"></ul>
+        <div class="routes__group"><p>${t('Vest și Nord', 'West and North')}</p><div class="routes__pick">${chips(WEST)}</div></div>
+        <div class="routes__group"><p>${t('Centru și Est', 'Central and East')}</p><div class="routes__pick">${chips(EAST)}</div></div>
+        <p class="lanes__title" aria-live="polite"></p>
+        <ul class="lanes"></ul>
         <div class="routes__cta"><a class="btn btn--light" href="contact.html#oferta">${t('Solicită o ofertă', 'Request a quote')}</a></div>
       </div>
     </div>`;
 
+  const svg = root.querySelector('svg');
+  const status = root.querySelector('.routes__status');
   const list = root.querySelector('.lanes');
+  const title = root.querySelector('.lanes__title');
+  let current = root.dataset.routeBoard || 'RO';
+  let mapReady = false;
+
   const select = (hub) => {
+    current = hub;
     const mine = LANES.filter((l) => l.a === hub || l.b === hub);
-    const linked = new Set(mine.flatMap((l) => [l.a, l.b]));
-    root.querySelectorAll('.lane-line').forEach((el) => el.classList.toggle('is-on', el.dataset.a === hub || el.dataset.b === hub));
-    root.querySelectorAll('.map-node').forEach((el) => {
-      el.classList.toggle('is-active', el.dataset.hub === hub);
-      el.classList.toggle('is-linked', el.dataset.hub !== hub && linked.has(el.dataset.hub));
-    });
+    const others = mine.map((l) => (l.a === hub ? l.b : l.a));
+    const linked = new Set(others);
     root.querySelectorAll('.routes__pick button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.hub === hub)));
-    list.innerHTML = mine.map((l) => {
-      const other = l.a === hub ? l.b : l.a;
+    title.innerHTML = t(`${mine.length} legături din și spre ${HUBS[hub].ro}`, `${mine.length} lanes to and from ${HUBS[hub].en}`);
+    list.innerHTML = others.map((other, i) => {
+      const l = mine[i];
       return `<li><span class="lanes__name">${t(`${HUBS[hub].ro} ⇄ ${HUBS[other].ro}`, `${HUBS[hub].en} ⇄ ${HUBS[other].en}`)}</span>
         <span class="lanes__modes">${l.ftl ? '<span class="tag tag--ftl">FTL</span>' : ''}${l.groupage ? `<span class="tag tag--grp">${t('Grupaj la cerere', 'Groupage on request')}</span>` : ''}</span></li>`;
     }).join('');
+    if (!mapReady) return;
+    svg.querySelectorAll('[data-hub]').forEach((el) => {
+      el.classList.toggle('is-active', el.dataset.hub === hub);
+      el.classList.toggle('is-linked', linked.has(el.dataset.hub));
+    });
+    svg.querySelector('.arcs').innerHTML = others.map((o, i) =>
+      `<path class="arc" pathLength="1" style="animation-delay:${i * 70}ms" d="${arcPath(HUBS[hub], HUBS[o])}"/>`).join('');
+    const hubs = svg.querySelector('.hubs');
+    hubs.append(...[...hubs.children].filter((g) => g.classList.contains('is-linked') || g.classList.contains('is-active')));
+    keepLabelsInside(svg);
   };
+
   root.addEventListener('click', (e) => {
     const hit = e.target.closest('[data-hub]');
     if (hit) select(hit.dataset.hub);
   });
-  root.addEventListener('keydown', (e) => {
-    const hit = e.target.closest('.map-node');
-    if (hit && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(hit.dataset.hub); }
-  });
-  select(root.dataset.routeBoard || 'RO');
+
+  new IntersectionObserver((entries, io) => {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    drawMap(svg).then(() => { mapReady = true; status.remove(); select(current); })
+      .catch(() => { status.innerHTML = t('Harta nu s-a putut încărca. Rutele sunt listate alături.', 'The map could not load. The lanes are listed alongside.'); });
+  }, { rootMargin: '400px' }).observe(root);
+
+  select(current);
+}
+
+/* ---------- Trailer diagram: top view of a 13.6 m semitrailer, 33 EUR pallet places ---------- */
+
+const TRAILER_LOADS = {
+  ftl: [33],
+  groupage: [14, 8, 5],
+};
+
+function renderTrailer(root) {
+  const kind = root.dataset.trailer === 'groupage' ? 'groupage' : 'ftl';
+  const cells = [];
+  TRAILER_LOADS[kind].forEach((n, load) => { for (let i = 0; i < n; i++) cells.push(`<span class="trailer__pallet trailer__pallet--${load + 1}"></span>`); });
+  while (cells.length < 33) cells.push('<span class="trailer__pallet trailer__pallet--free"></span>');
+  root.classList.add('trailer', `trailer--${kind}`);
+  root.setAttribute('role', 'img');
+  root.setAttribute('aria-label', kind === 'ftl'
+    ? 'Semiremorcă cu toate cele 33 de locuri de palet ocupate de o singură încărcătură / Trailer with all 33 pallet places taken by one load'
+    : 'Semiremorcă cu trei încărcături compatibile și locuri libere / Trailer with three compatible loads and free places');
+  root.innerHTML = `<div class="trailer__box">${cells.join('')}</div><div class="trailer__cab"></div>`;
 }
 
 /* ---------- Quote form ---------- */
@@ -277,7 +356,7 @@ function renderQuoteForm(root) {
                 </select>
               </div>
               ${field('temp', 'Temperatura solicitată', 'Required temperature', { required: true, phRo: 'ex. +2 / +4 °C', phEn: 'e.g. +2 / +4 °C' })}
-              ${field('pallets', 'Număr de paleți', 'Number of pallets', { type: 'number', required: true, attrs: 'min="1" max="66" inputmode="numeric"' })}
+              ${field('pallets', 'Număr de paleți', 'Number of pallets', { type: 'number', required: true, attrs: 'min="1" inputmode="numeric"' })}
               ${field('palletSize', 'Dimensiuni paleți', 'Pallet size', { phRo: 'ex. 120×80 cm, h 1,6 m', phEn: 'e.g. 120×80 cm, h 1.6 m' })}
               ${field('weight', 'Greutate totală (kg)', 'Total weight (kg)', { type: 'number', attrs: 'min="1" inputmode="numeric"' })}
             </div>
@@ -309,15 +388,73 @@ function renderQuoteForm(root) {
       </div>
       <div class="quote__done" role="status">
         <h3>${t('Cererea este pregătită în emailul tău', 'Your request is ready in your email app')}</h3>
-        <p>${t(`Trimite emailul ca să primești oferta. Nu s-a deschis aplicația de email? Scrie-ne la <a href="mailto:${CONTACT.email}">${CONTACT.email}</a> sau sună la <a href="${CONTACT.phoneHref}">${CONTACT.phone}</a>.`,
-          `Send the email to receive your quote. Email app did not open? Write to <a href="mailto:${CONTACT.email}">${CONTACT.email}</a> or call <a href="${CONTACT.phoneHref}">${CONTACT.phone}</a>.`)}</p>
+        <p>${t(`Trimite emailul ca să primești oferta. Folosești email în browser? Copiază cererea și trimite-o la ${CONTACT.email}, sau sună la <a href="${CONTACT.phoneHref}">${CONTACT.phone}</a>.`,
+          `Send the email to receive your quote. Using webmail? Copy the request and send it to ${CONTACT.email}, or call <a href="${CONTACT.phoneHref}">${CONTACT.phone}</a>.`)}</p>
+        <div class="btn-row">
+          <button class="btn btn--primary" type="button" data-copy>${icon('copy')}<span data-copy-label>${t('Copiază cererea', 'Copy the request')}</span></button>
+          <a class="btn btn--ghost" data-reopen href="mailto:${CONTACT.email}">${icon('mail')}${t('Deschide emailul din nou', 'Open the email again')}</a>
+        </div>
       </div>
     </form>`;
 
   const form = root.querySelector('form');
+  const loadDate = form.elements.loadDate;
+  const deliverBy = form.elements.deliverBy;
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  loadDate.min = today;
+  deliverBy.min = today;
+  let request = '';
+
+  const errorText = (el) => {
+    const v = el.validity;
+    if (v.valueMissing) {
+      if (el.type === 'checkbox') return t('Bifează acordul ca să îți putem trimite oferta.', 'Tick the box so we can send you the quote.');
+      if (el.tagName === 'SELECT') return t('Alege tipul mărfii.', 'Choose the type of goods.');
+      return t('Completează acest câmp.', 'Fill in this field.');
+    }
+    if (v.typeMismatch) return t('Scrie o adresă de email validă, de forma nume@firma.ro.', 'Enter a valid email address, like name@company.com.');
+    if (v.customError) return t('Termenul de livrare trebuie să fie după data încărcării.', 'The delivery deadline must be on or after the loading date.');
+    if (v.rangeUnderflow) return el.type === 'date' ? t('Alege data de azi sau una ulterioară.', 'Pick today or a later date.') : t('Scrie cel puțin 1.', 'Enter at least 1.');
+    return t('Verifică acest câmp.', 'Check this field.');
+  };
+  const clearError = (el) => {
+    el.removeAttribute('aria-invalid');
+    document.getElementById(`err-${el.name}`)?.remove();
+  };
+  const showError = (el) => {
+    clearError(el);
+    const p = document.createElement('p');
+    p.className = 'field__error';
+    p.id = `err-${el.name}`;
+    p.innerHTML = errorText(el);
+    el.setAttribute('aria-invalid', 'true');
+    el.setAttribute('aria-describedby', p.id);
+    const box = el.closest('.field');
+    if (box) box.append(p); else el.closest('.consent').after(p);
+  };
+  form.addEventListener('input', (e) => { if (e.target.validity?.valid) clearError(e.target); });
+  form.addEventListener('change', (e) => { if (e.target.validity?.valid) clearError(e.target); });
+
+  form.querySelector('[data-copy]').addEventListener('click', async (e) => {
+    const label = e.currentTarget.querySelector('[data-copy-label]');
+    try {
+      await navigator.clipboard.writeText(request);
+      label.innerHTML = t('Copiat', 'Copied');
+    } catch {
+      label.innerHTML = t('Copierea nu a mers. Selectează textul din email.', 'Copy failed. Select the text in the email.');
+    }
+  });
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!form.reportValidity()) return;
+    deliverBy.setCustomValidity(deliverBy.value && loadDate.value && deliverBy.value < loadDate.value ? 'before-load' : '');
+    const invalid = [...form.elements].filter((el) => el.willValidate && !el.checkValidity());
+    form.querySelectorAll('[aria-invalid]').forEach(clearError);
+    if (invalid.length) {
+      invalid.forEach(showError);
+      invalid[0].focus();
+      return;
+    }
     const d = Object.fromEntries(new FormData(form));
     // ponytail: mailto hand-off, no backend. Upgrade to an /api/quote function with an email provider to accept attachments and log requests.
     const lines = [
@@ -341,8 +478,15 @@ function renderQuoteForm(root) {
       `Limba clientului: ${document.documentElement.lang.toUpperCase()}`,
     ];
     const subject = `Cerere ofertă ${d.mode}: ${d.from} → ${d.to} (${d.loadDate})`;
-    location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-    form.querySelector('.quote__done').classList.add('is-visible');
+    const mailto = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    request = `${subject}\n\n${lines.join('\n')}`;
+    form.querySelector('[data-reopen]').href = mailto;
+    form.querySelector('[data-copy-label]').innerHTML = t('Copiază cererea', 'Copy the request');
+    const done = form.querySelector('.quote__done');
+    done.classList.add('is-visible');
+    if (window.lucide) window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });
+    done.scrollIntoView({ block: 'nearest' });
+    location.href = mailto;
   });
 }
 
@@ -350,6 +494,7 @@ function renderQuoteForm(root) {
 
 renderHeader();
 renderFooter();
+document.querySelectorAll('[data-trailer]').forEach(renderTrailer);
 document.querySelectorAll('[data-route-board]').forEach(renderRouteBoard);
 document.querySelectorAll('[data-quote-form]').forEach(renderQuoteForm);
 setLang(document.documentElement.lang === 'en' ? 'en' : 'ro');
